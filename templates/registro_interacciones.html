@@ -29,13 +29,22 @@ Nombre: <input type="text" name="cliente_nombre"><br>
 <br>
 Correo: <input type="email" name="cliente_correo"><br>
 <br>
-DN Afectado: <input type="text" name="dn_afectado"><br>
-<br>
-DN Contacto: <input type="text" name="dn_contacto"><br>
-<br>
-Rol: <input type="text" name="rol"><br>
-<br>
-Canal de contacto: <input type="text" name="canal"><br>
+DN Afectado: <input type="text" name="dn_afectado" pattern="\d{10}" maxlength="10" minlength="10" required title="A 10 números"><br><br>
+DN Contacto: <input type="text" name="dn_contacto" pattern="\d{10}" maxlength="10" minlength="10" required title="A 10 números"><br><br>
+
+Rol: <select name="rol" id="rol" onchange="mostrarCampos()">
+    <option value="seleccione">Seleccione</option>
+    <option value="Vendedor">Vendedor</option>
+    <option value="Socio">Socio</option>
+    <option value="inphonity">inphonity</option>
+</select><br><br>
+Canal de contacto:
+<select name="canal" id="canal" onchange="mostrarCampos()">
+    <option value="seleccione">Seleccione</option>
+    <option value="VOZ">VOZ</option>
+    <option value="CHAT">CHAT</option>
+    <option value="WHATSAPP">WHATSAPP</option>
+</select><br><br>
 Link de genesys: <input type="text" name="link"><br>
 
 <!-- ================= interaccion ================= -->
