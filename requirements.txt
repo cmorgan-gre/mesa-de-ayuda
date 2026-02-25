@@ -1,5 +1,5 @@
 Flask
 gunicorn
-sqlite3
-werkzeug
-jinja2
+pandas
+openpyxl
+Werkzeug
