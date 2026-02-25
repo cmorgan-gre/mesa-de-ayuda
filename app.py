@@ -25,8 +25,10 @@ def archivo_permitido(filename):
 # ================== CONFIGURACIÓN DE CORREO ==================
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-EMAIL_USER = "cmorgan@inphonity.com"
-EMAIL_PASS = "tozyrfipwevypxws"
+import os
+
+EMAIL_USER = os.environ.get("EMAIL_USER")
+EMAIL_PASS = os.environ.get("EMAIL_PASS")
 
 SOPORTE_EMAILS = [
     "cmorgan@inphonity.com",
