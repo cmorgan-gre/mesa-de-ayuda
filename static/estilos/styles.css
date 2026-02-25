@@ -12,10 +12,11 @@
     --azul-claro: #D4F1FF;
 }
 
-/* ================== RESET Y BASE ================== */
+/* ================== BASE ================== */
 html {
-    font-size: 62.5%; /* 1rem = 10px */
+    font-size: 62.5%;
 }
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.6rem;
@@ -39,7 +40,7 @@ header h1 {
     font-size: 3.5rem;
 }
 
-/* ================== NAVEGACIÓN ================== */
+/* ================== NAV ================== */
 nav {
     display: flex;
     justify-content: center;
@@ -55,7 +56,7 @@ nav a {
     color: var(--negro);
     font-weight: bold;
     padding: 0.5rem 1.2rem;
-    transition: all 0.3s ease;
+    transition: .3s;
 }
 
 nav a:hover {
@@ -66,12 +67,10 @@ nav a:hover {
 
 /* ================== TITULOS ================== */
 h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 3rem;
     color: var(--azul);
-    margin-top: 0;
-}
-
-b {
-    color: var(--negro);
 }
 
 /* ================== SECCIONES ================== */
@@ -84,7 +83,6 @@ section {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
-    margin-bottom: 2rem;
 }
 
 .info-box {
@@ -94,11 +92,6 @@ section {
     width: 400px;
     background-color: var(--blanco);
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.info-box:hover {
-    transform: translateY(-5px);
 }
 
 /* ================== TICKETS ================== */
@@ -108,22 +101,15 @@ section {
     padding: 20px;
     width: 400px;
     background-color: var(--azul-claro);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     margin-bottom: 1rem;
 }
 
 .ticket-box.yellow {
     background-color: var(--amarillo);
-    border-color: var(--amarillo);
 }
 
 .ticket-box.closed {
     background-color: var(--gris-claro);
-    border-color: var(--negro);
-}
-
-.ticket-box p {
-    margin: 0.5rem 0;
 }
 
 .ticket-box a {
@@ -132,90 +118,97 @@ section {
     font-weight: bold;
 }
 
-.ticket-box a:hover {
-    color: var(--azul);
-}
-
-/* ================== ESTILOS INLINE ANTERIORES ================== */
-div[style*="display:flex; gap:20px;"] {
-    display: flex !important;
-    gap: 20px !important;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-}
-
-div[style*="border:2px solid #444;"] {
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    padding: 15px !important;
-    transition: transform 0.3s ease;
-    background-color: var(--blanco) !important;
-}
-
-div[style*="border:2px solid #444;"]:hover {
-    transform: translateY(-5px);
-}
+/* ================== BOTON ================== */
 .btn-descargar {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #6271F9; /* azul primario */
-    color: #FFFFFF;
+    background-color: var(--azul);
+    color: white;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
-    transition: 0.3s;
 }
 
 .btn-descargar:hover {
-    background-color: #4454E2; /* azul oscuro */
+    background-color: var(--azul-oscuro);
 }
-h2 {
-    margin: 0;
-    text-align: center;
-    font-size: 3rem;
-}
-/* CONTENEDOR GENERAL */
-.slider-container{
-    position: relative;
+
+/* ===================================================== */
+/* ================= SLIDER RESPONSIVE ================= */
+/* ===================================================== */
+
+.slider-container {
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 25px 0;
 }
 
 /* AREA DESLIZABLE */
-.slider{
+.slider {
     display: flex;
-    gap: 20px;
     overflow-x: auto;
-    scroll-behavior: smooth;
+    gap: 14px;
+    width: min(92%, 900px);
     padding: 10px;
+    scroll-behavior: smooth;
 }
 
-/* OCULTA SCROLLBAR */
-.slider::-webkit-scrollbar{
-    display:none;
+/* ocultar scrollbar */
+.slider::-webkit-scrollbar {
+    display: none;
 }
 
-/* TARJETAS */
-.card{
-    min-width: 400px;
-    border:2px solid #444;
-    padding:15px;
-    background:#f5f5f5;
-    flex-shrink:0;
+/* ===== IMÁGENES (TAMAÑO CONTROLADO REAL) ===== */
+.slide-img{
+    flex:0 0 auto;
+
+    width:280px;
+    max-width:80vw;
+    height:auto;
+
+    border-radius:18px;
+
+    object-fit:contain;   /* 👈 NO recorta */
+    background:white;     /* evita espacios feos si la imagen no llena */
+
+    box-shadow:0 6px 18px rgba(0,0,0,0.15);
+    transition:.3s;
+}
+/* efecto hover */
+.slide-img:hover {
+    transform: scale(1.05);
 }
 
 /* FLECHAS */
-.flecha{
-    background:black;
-    color:white;
-    border:none;
-    font-size:25px;
-    cursor:pointer;
-    padding:10px 15px;
-    z-index:10;
+.flecha {
+    border: none;
+    background: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 50%;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
 }
 
-.flecha:hover{
-    background:#333;
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+    .slider {
+        width: 95%;
+        gap: 10px;
+    }
+
+    .slide-img {
+        width: 70vw;
+        height: 40vw;
+    }
+
+    .flecha {
+        font-size: 16px;
+        padding: 6px 10px;
+    }
 }
