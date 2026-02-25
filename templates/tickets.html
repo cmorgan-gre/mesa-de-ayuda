@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/styles.css') }}">
+
+    <title>Tickets</title>
+</head>
+<body>
+        <header>
+ <h1>inphonity </h1>
+    </header>
+    <nav>
+       <a href="/inicio_cc">Inicio</a>
+
+        <a href="/">Crear ticket</a>
+        <a href="/registro_interacciones">Registrar interaccion</a>
+        
+    </nav>
+<h2>📂 Lista de Tickets</h2>
+
+{% for t in tickets %}
+<p>
+    🎫 <a href="{{ url_for('detalle_ticket', id=t.id) }}">TT-{{ t.id }}</a>
+|
+    {{ t.categoria }} |
+    {{ t.estatus }}
+</p>
+{% endfor %}
+
+<br>
+
+
+</body>
+</html>

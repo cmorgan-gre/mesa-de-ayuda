@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/styles.css') }}">
+
+    <title>Nuevo Ticket</title>
+</head>
+<body>
+    <header>
+ <h1>inphonity </h1>
+    </header>
+    <nav>
+       <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Detalle de ticket</a>
+        <a href="/">Crear ticket</a>
+    
+        
+    </nav>
+
+<form method="POST" action="/crear_ticket">
+
+<h3>👤 Datos del Ejecutivo</h3>
+Nombre: <input type="text" name="ejecutivo_nombre"><br>
+<br>
+Email: <input type="email" name="ejecutivo_email"><br>
+
+<h3>👥 Cliente</h3>
+Nombre: <input type="text" name="cliente_nombre"><br>
+<br>
+Correo: <input type="email" name="cliente_correo"><br>
+<br>
+DN Afectado: <input type="text" name="dn_afectado"><br>
+<br>
+DN Contacto: <input type="text" name="dn_contacto"><br>
+<br>
+Rol: <input type="text" name="rol"><br>
+<br>
+Canal de contacto: <input type="text" name="canal"><br>
+
+
+<!-- ================= interaccion ================= -->
+
+    <h3>📝 interacciones</h3>
+    Descripción de la interaccion: <input type="text" name="descripcion_error"><br>
+<input type="hidden" name="categoria" value="interaccion">
+
+
+
+
+<br>
+<div>
+    <h3>
+       <button type="submit">Guardar</button>
+</form>     
+    </h3>
+
+</div>
+
+</body>
+</html>

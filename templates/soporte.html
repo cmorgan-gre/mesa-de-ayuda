@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/styles.css') }}">
+
+    <title>Panel de Soporte</title>
+</head>
+<body>
+  <header>
+ <h1>inphonity </h1>
+    </header>
+    <nav>
+       <a href="/inicio_cc">Inicio</a>
+
+        <a href="/">Crear ticket</a>
+        <a href="/registro_interacciones">Registrar interaccion</a>
+        
+    </nav>
+<h1>🛠 Panel de Soporte</h1>
+<p>Gestión de tickets activos</p>
+<hr>
+
+<h2>🟢 Tickets Abiertos</h2>
+{% for t in abiertos %}
+<div style="border:1px solid #2e7d32; padding:10px; margin-bottom:10px; background:#e8f5e9;">
+    🎫 <b>TT-{{ t.id }}</b> |
+    {{ t.categoria }} |
+    {{ t.cliente_nombre }} |
+    {{ t.estatus }}
+    <a href="{{ url_for('soporte_detalle', id=t.id) }}">🔍 Ver detalle</a>
+</div>
+{% else %}
+<p>No hay tickets abiertos</p>
+{% endfor %}
+
+<hr>
+
+<h2>🟡 Tickets En Proceso</h2>
+{% for t in en_proceso %}
+<div style="border:1px solid #f9a825; padding:10px; margin-bottom:10px; background:#fff8e1;">
+    🎫 <b>TT-{{ t.id }}</b> |
+    {{ t.categoria }} |
+    {{ t.cliente_nombre }} |
+    {{ t.estatus }}
+    <a href="/soporte/ticket/{{ t.id }}">🔍 Ver detalle</a>
+</div>
+{% else %}
+<p>No hay tickets en proceso</p>
+{% endfor %}
+<hr>
+
+
+
+<h2> Tickets CERRADOS</h2>
+{% for t in cerrados %}
+<div style="border:1px solid #E8DAF8; padding:10px; margin-bottom:10px; background:#fff8e1;">
+    🎫 <b>TT-{{ t.id }}</b> |
+    {{ t.categoria }} |
+    {{ t.cliente_nombre }} |
+    {{ t.estatus }}
+    <a href="/soporte/ticket/{{ t.id }}">🔍 Ver detalle</a>
+</div>
+{% else %}
+<p>No hay tickets en cerrados</p>
+{% endfor %}
+<hr>
+
+
+
+
+<a href="{{ url_for('descargar_db') }}" class="btn-descargar">💾 Descargar BD</a>
+<a href="{{ url_for('descargar_excel') }}" class="btn-descargar">💾 Descargar Excel</a>
+
+</body>
+</html>

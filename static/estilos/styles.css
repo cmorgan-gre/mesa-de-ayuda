@@ -1,0 +1,221 @@
+/* ================== PALETA DE COLORES ================== */
+:root {
+    --blanco: #FFFFFF;
+    --negro: #000000;
+    --verde: #27E1C1;
+    --azul: #6271F9;
+    --verde-oscuro: #28C7AC;
+    --azul-oscuro: #4454E2;
+    --amarillo: #FDB827;
+    --gris-claro: #F2F5F6;
+    --lila: #E8DAF8;
+    --azul-claro: #D4F1FF;
+}
+
+/* ================== RESET Y BASE ================== */
+html {
+    font-size: 62.5%; /* 1rem = 10px */
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.6rem;
+    margin: 0;
+    background-color: var(--gris-claro);
+    color: var(--negro);
+    line-height: 1.5;
+}
+
+/* ================== HEADER ================== */
+header {
+    background-color: var(--negro);
+    color: var(--blanco);
+    text-align: center;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3.5rem;
+}
+
+/* ================== NAVEGACIÓN ================== */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    background-color: var(--verde);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--negro);
+    font-weight: bold;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background-color: var(--verde-oscuro);
+    color: var(--blanco);
+    border-radius: 5px;
+}
+
+/* ================== TITULOS ================== */
+h2 {
+    color: var(--azul);
+    margin-top: 0;
+}
+
+b {
+    color: var(--negro);
+}
+
+/* ================== SECCIONES ================== */
+section {
+    margin-bottom: 3rem;
+}
+
+/* ================== INFO BOX ================== */
+.info-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.info-box {
+    border: 2px solid var(--verde-oscuro);
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    background-color: var(--blanco);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.info-box:hover {
+    transform: translateY(-5px);
+}
+
+/* ================== TICKETS ================== */
+.ticket-box {
+    border: 2px solid var(--azul);
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    background-color: var(--azul-claro);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+
+.ticket-box.yellow {
+    background-color: var(--amarillo);
+    border-color: var(--amarillo);
+}
+
+.ticket-box.closed {
+    background-color: var(--gris-claro);
+    border-color: var(--negro);
+}
+
+.ticket-box p {
+    margin: 0.5rem 0;
+}
+
+.ticket-box a {
+    text-decoration: none;
+    color: var(--azul-oscuro);
+    font-weight: bold;
+}
+
+.ticket-box a:hover {
+    color: var(--azul);
+}
+
+/* ================== ESTILOS INLINE ANTERIORES ================== */
+div[style*="display:flex; gap:20px;"] {
+    display: flex !important;
+    gap: 20px !important;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+div[style*="border:2px solid #444;"] {
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 15px !important;
+    transition: transform 0.3s ease;
+    background-color: var(--blanco) !important;
+}
+
+div[style*="border:2px solid #444;"]:hover {
+    transform: translateY(-5px);
+}
+.btn-descargar {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #6271F9; /* azul primario */
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-descargar:hover {
+    background-color: #4454E2; /* azul oscuro */
+}
+h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 3rem;
+}
+/* CONTENEDOR GENERAL */
+.slider-container{
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* AREA DESLIZABLE */
+.slider{
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px;
+}
+
+/* OCULTA SCROLLBAR */
+.slider::-webkit-scrollbar{
+    display:none;
+}
+
+/* TARJETAS */
+.card{
+    min-width: 400px;
+    border:2px solid #444;
+    padding:15px;
+    background:#f5f5f5;
+    flex-shrink:0;
+}
+
+/* FLECHAS */
+.flecha{
+    background:black;
+    color:white;
+    border:none;
+    font-size:25px;
+    cursor:pointer;
+    padding:10px 15px;
+    z-index:10;
+}
+
+.flecha:hover{
+    background:#333;
+}

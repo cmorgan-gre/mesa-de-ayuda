@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inphonity cc</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='estilos/styles.css') }}">
+     <link rel="icon" type="image/svg+xml" href="/favicon.png">
+
+</head>
+<body>
+    
+
+    <header>
+ <h1>inphonity </h1>
+    </header>
+    <nav>
+       
+        <a href="/tickets">Detalles</a>
+        <a href="/">Crear ticket</a>
+        <a href="/registro_interacciones">Registrar interaccion</a>
+        
+    </nav>
+    
+
+<div>
+    <h2>Información Importante del mes de febrero</h2><br><br>
+
+    <div class="slider-container">
+
+        <button class="flecha izquierda" onclick="moverSlider(-1)">❮</button>
+
+        <div class="slider" id="sliderNoticias">
+
+            <div class="card">
+                <b>PARRILLA!!!</b><br><br>
+                <p>el plan activa tiene 48 gb</p>
+            </div>
+
+            <div class="card">
+                <b>Ventas</b><br><br>
+                <p>ya no hay líneas gratis</p>
+            </div>
+
+            <div class="card">
+                <b>NOTICIA</b><br><br>
+                <p>El proceso de generación y validación de cashback se encuentra actualmente en revisión para su pago y correcta visualización en la app</p>
+            </div>
+
+        </div>
+
+        <button class="flecha derecha" onclick="moverSlider(1)">❯</button>
+
+    </div>
+</div>
+
+
+  <section>
+    <br>
+<b>TICKETS ABIERTOS</b><br><br>
+    <div style="display:flex; gap:20px;">
+        
+        <div>
+          
+            
+        </div>
+        
+
+
+<h2>🟢 Tickets Abiertos</h2>
+{% for t in abiertos %}
+<p>
+    🎫 <a href="{{ url_for('detalle_ticket', id=t.id) }}">TT-{{ t.id }}</a> |
+    {{ t.categoria }} |
+    {{ t.estatus }}
+</p>
+{% endfor %}
+
+
+        </div>
+
+    </div>
+  </section> 
+
+<section>
+  <br>
+  <b>TICKETS PENDIENTES</b><br><br>
+
+  <div style="display:flex; gap:20px;">
+    <div style="border:2px solid #444; padding:15px; width:400px; background:#fff8e1;">
+<h2>🟡 Tickets En Proceso</h2>
+{% for t in en_proceso %}
+<p>
+    🎫 <a href="{{ url_for('detalle_ticket', id=t.id) }}">TT-{{ t.id }}</a> |
+    {{ t.categoria }} |
+    {{ t.estatus }}
+</p>
+{% endfor %}
+
+
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <br>
+  <b>HISTORIAL DE TICKETS CERRADOS</b><br><br>
+
+  <div style="display:flex; gap:20px;">
+    <div style="border:2px solid #444; padding:15px; width:400px; background:#f5f5f5;">
+<h2>⚫ Tickets Cerrados</h2>
+{% for t in cerrados %}
+<p>
+    🎫 <a href="{{ url_for('detalle_ticket', id=t.id) }}">TT-{{ t.id }}</a> |
+    {{ t.categoria }} |
+    {{ t.estatus }}
+</p>
+{% endfor %}
+
+
+    </div>
+  </div>
+</section>
+ 
+
+<script>
+function moverSlider(direccion){
+    const slider = document.getElementById("sliderNoticias");
+
+    const distancia = 420; // tamaño tarjeta + gap
+
+    slider.scrollBy({
+        left: distancia * direccion,
+        behavior: "smooth"
+    });
+}
+</script>
+
+    
+
+</body>
+</html>

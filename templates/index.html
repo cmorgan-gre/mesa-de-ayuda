@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/styles.css') }}">
+    <title>Nuevo Ticket</title>
+</head>
+<body>
+    <header>
+        <h1>inphonity</h1>
+    </header>
+
+    <nav>
+        <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Detalle de ticket</a>
+        <a href="/registro_interacciones">Registrar interaccion</a>
+    </nav>
+
+<form method="POST" action="/crear_ticket" enctype="multipart/form-data">
+
+<h3>👤 Datos del Ejecutivo</h3>
+Nombre: <input type="text" name="ejecutivo_nombre"><br><br>
+Email: <input type="email" name="ejecutivo_email"><br>
+
+<h3>👥 Cliente</h3>
+Nombre: <input type="text" name="cliente_nombre"><br><br>
+Correo: <input type="email" name="cliente_correo"><br><br>
+DN Afectado: <input type="text" name="dn_afectado"><br><br>
+DN Contacto: <input type="text" name="dn_contacto"><br><br>
+Rol: <input type="text" name="rol"><br><br>
+Canal de contacto: <input type="text" name="canal"><br>
+Link de genesys: <input type="text" name="link"><br>
+
+<h3>📂 Categoría</h3>
+<select name="categoria" id="categoria" onchange="mostrarCampos()">
+    <option value="seleccione">Seleccione</option>
+    <option value="llamadas">Llamadas</option>
+    <option value="datos">Datos</option>
+    <option value="sms">SMS</option>
+    <option value="falla_total">Falla total</option>
+    <option value="otros">Otros</option>
+</select>
+
+<!-- ================= DATOS ================= -->
+<div id="campos_datos" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
+    <h3>🌐 Datos para fallas en datos móviles</h3>
+    Descripcion del error: <input type="text" name="descripcion_error"><br>
+    Tipo de afectación:
+    <select name="tipo_afectacion">
+        <option value="">Seleccione</option>
+        <option value="total">Total</option>
+        <option value="parcial">Parcial</option>
+        <option value="intermitente">Intermitente</option>
+    </select><br>
+    Ubicación: <input type="text" name="ubicacion"><br>
+    Si es parcial, indicar App o página: <input type="text" name="pagina_app"><br>
+    Validaciones realizadas: <input type="text" name="validaciones"><br><br>
+
+    📎 Adjuntar evidencias:
+    <input type="file" name="evidencias" accept=".jpg,.jpeg,.png,.pdf" multiple>
+</div>
+
+<!-- ================= LLAMADAS ================= -->
+<div id="campos_llamadas" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
+    <h3>📞 Datos para fallas en llamadas</h3>
+    Descripcion del error: <input type="text" name="descripcion_error"><br>
+    Compañía: <input type="text" name="compania"><br>
+    Número de prueba: <input type="text" name="numeros_prueba"><br>
+    Versión de software: <input type="text" name="version_software"><br>
+    Locución que se escucha: <input type="text" name="locucion"><br>
+    Ubicación: <input type="text" name="ubicacion"><br>
+    Validaciones realizadas: <input type="text" name="validaciones"><br><br>
+
+    📎 Adjuntar evidencias:
+    <input type="file" name="evidencias" accept=".jpg,.jpeg,.png,.pdf" multiple>
+</div>
+
+<!-- ================= SMS ================= -->
+<div id="campos_sms" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
+    <h3>💬 Datos para fallas en SMS</h3>
+    Descripcion del error: <input type="text" name="descripcion_error"><br>
+    Compañía: <input type="text" name="compania"><br>
+    Número de prueba: <input type="text" name="numero_prueba"><br>
+    Ubicación: <input type="text" name="ubicacion"><br>
+    Validaciones realizadas: <input type="text" name="validaciones"><br><br>
+
+    📎 Adjuntar evidencias:
+    <input type="file" name="evidencias" accept=".jpg,.jpeg,.png,.pdf" multiple>
+</div>
+
+<!-- ================= FALLA TOTAL ================= -->
+<div id="campos_falla_total" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
+    <h3>🚨 Falla Total</h3>
+    Descripcion del error: <input type="text" name="descripcion_error"><br>
+    Ubicación: <input type="text" name="ubicacion"><br>
+    Validaciones realizadas: <input type="text" name="validaciones"><br><br>
+
+    📎 Adjuntar evidencias:
+    <input type="file" name="evidencias" accept=".jpg,.jpeg,.png,.pdf" multiple>
+</div>
+
+<!-- ================= OTROS ================= -->
+<div id="campos_otros" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
+    <h3>📝 Otros requerimientos</h3>
+    Descripcion del error: <input type="text" name="descripcion_error"><br><br>
+
+    📎 Adjuntar evidencias:
+    <input type="file" name="evidencias" accept=".jpg,.jpeg,.png,.pdf" multiple>
+</div>
+
+<!-- ================= INTERACCION ================= -->
+<div id="campos_interaccion" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
+    <h3>📝 Interacciones</h3>
+    Descripcion del error: <input type="text" name="descripcion_error"><br><br>
+
+    📎 Adjuntar evidencias:
+    <input type="file" name="evidencias" accept=".jpg,.jpeg,.png,.pdf" multiple>
+</div>
+
+<!-- ================= SELECCIONE ================= -->
+<div id="campos_seleccione" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
+    <h3>SELECCIONE UNA CATEGORIA</h3>
+</div>
+
+<br>
+<button type="submit">Guardar</button>
+
+</form>
+
+<script>
+function mostrarCampos() {
+    let categoria = document.getElementById("categoria").value;
+
+    let secciones = [
+        "campos_llamadas",
+        "campos_datos",
+        "campos_sms",
+        "campos_falla_total",
+        "campos_otros",
+        "campos_interaccion",
+        "campos_seleccione"
+    ];
+
+    secciones.forEach(id => {
+        let div = document.getElementById(id);
+        div.style.display = "none";
+        div.querySelectorAll("input, select, textarea").forEach(el => {
+            el.disabled = true;
+        });
+    });
+
+    let activa = document.getElementById("campos_" + categoria);
+    if (activa) {
+        activa.style.display = "block";
+        activa.querySelectorAll("input, select, textarea").forEach(el => {
+            el.disabled = false;
+        });
+    }
+}
+</script>
+
+</body>
+</html>
