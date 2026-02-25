@@ -326,7 +326,20 @@ def crear_ticket():
 
     conn.commit()
     conn.close()
+    # ===== ENVIAR CORREO A SOPORTE =====
+    asunto = f"Nuevo Ticket #{ticket_id}"
+    cuerpo = f"""
+Se ha creado un nuevo ticket.
 
+ID: {ticket_id}
+Ejecutivo: {val("ejecutivo_nombre")}
+Cliente: {val("cliente_nombre")}
+Categoría: {categoria_ticket}
+Descripción: {val("descripcion_error")}
+"""
+
+    for correo in SOPORTE_EMAILS:
+        enviar_correo(correo, asunto, cuerpo)
     return redirect(url_for("ver_tickets"))
 
 
