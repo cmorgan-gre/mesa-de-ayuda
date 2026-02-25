@@ -25,10 +25,8 @@ def archivo_permitido(filename):
 # ================== CONFIGURACIÓN DE CORREO ==================
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-import os
-
-EMAIL_USER = os.environ.get("EMAIL_USER")
-EMAIL_PASS = os.environ.get("EMAIL_PASS")
+EMAIL_USER = "cmorgan@inphonity.com"
+EMAIL_PASS = "tozyrfipwevypxws"
 
 SOPORTE_EMAILS = [
     "cmorgan@inphonity.com",
@@ -328,20 +326,7 @@ def crear_ticket():
 
     conn.commit()
     conn.close()
-    # ===== ENVIAR CORREO A SOPORTE =====
-    asunto = f"Nuevo Ticket #{ticket_id}"
-    cuerpo = f"""
-Se ha creado un nuevo ticket.
 
-ID: {ticket_id}
-Ejecutivo: {val("ejecutivo_nombre")}
-Cliente: {val("cliente_nombre")}
-Categoría: {categoria_ticket}
-Descripción: {val("descripcion_error")}
-"""
-
-    for correo in SOPORTE_EMAILS:
-        enviar_correo(correo, asunto, cuerpo)
     return redirect(url_for("ver_tickets"))
 
 
