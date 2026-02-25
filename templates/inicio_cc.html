@@ -24,34 +24,26 @@
     
 
 <div>
-    <h2>Información Importante del mes de febrero</h2><br><br>
+    <h2>Información Importante del mes</h2><br><br>
 
-    <div class="slider-container">
+<div class="slider-container">
 
-        <button class="flecha izquierda" onclick="moverSlider(-1)">❮</button>
+    <button class="flecha izquierda" onclick="moverSlider(-1)">❮</button>
 
-        <div class="slider" id="sliderNoticias">
+    <div class="slider" id="sliderNoticias">
 
-            <div class="card">
-                <b>PARRILLA!!!</b><br><br>
-                <p>el plan activa tiene 48 gb</p>
-            </div>
-
-            <div class="card">
-                <b>Ventas</b><br><br>
-                <p>ya no hay líneas gratis</p>
-            </div>
-
-            <div class="card">
-                <b>NOTICIA</b><br><br>
-                <p>El proceso de generación y validación de cashback se encuentra actualmente en revisión para su pago y correcta visualización en la app</p>
-            </div>
-
-        </div>
-
-        <button class="flecha derecha" onclick="moverSlider(1)">❯</button>
+        <img class="slide-img" src="/static/img/noticia1.jpeg">
+        <img class="slide-img" src="/static/img/noticia1.jpeg">
+        <img class="slide-img" src="/static/img/noticia1.jpeg">
+        <img class="slide-img" src="/static/img/noticia1.jpeg">
+        <img class="slide-img" src="/static/img/noticia1.jpeg">
+        <img class="slide-img" src="/static/img/noticia1.jpeg">
 
     </div>
+
+    <button class="flecha derecha" onclick="moverSlider(1)">❯</button>
+
+</div>
 </div>
 
 
@@ -128,7 +120,8 @@
 function moverSlider(direccion){
     const slider = document.getElementById("sliderNoticias");
 
-    const distancia = 420; // tamaño tarjeta + gap
+    const slide = slider.querySelector(".slide-img");
+    const distancia = slide.clientWidth + 20; // ancho real + gap
 
     slider.scrollBy({
         left: distancia * direccion,
