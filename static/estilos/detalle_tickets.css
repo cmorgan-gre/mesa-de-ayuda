@@ -1,0 +1,301 @@
+/* ================== PALETA DE COLORES ================== */
+:root {
+    --blanco: #FFFFFF;
+    --negro: #000000;
+    --verde: #27E1C1;
+    --azul: #6271F9;
+    --verde-oscuro: #28C7AC;
+    --azul-oscuro: #4454E2;
+    --amarillo: #FDB827;
+    --gris-claro: #F2F5F6;
+    --lila: #E8DAF8;
+    --azul-claro: #D4F1FF;
+}
+body{
+
+font-family: Arial, Helvetica, sans-serif;
+background:#f4f6f9;
+margin:0;
+
+}
+
+/* ================== HEADER ================== */
+header {
+    background-color: var(--negro);
+    color: var(--blanco);
+    text-align: center;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3.5rem;
+}
+
+/* ================== NAV ================== */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    background-color: var(--verde);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--negro);
+    font-weight: bold;
+    padding: 0.5rem 1.2rem;
+    transition: .3s;
+}
+
+nav a:hover {
+    background-color: var(--verde-oscuro);
+    color: var(--blanco);
+    border-radius: 5px;
+}
+
+/* HEADER */
+
+
+
+
+/* NAV */
+
+
+
+
+/* CONTENEDOR */
+
+.contenedor{
+
+padding:30px;
+
+}
+
+
+/* TABLA */
+
+.tabla-contenedor{
+
+background:white;
+padding:20px;
+border-radius:8px;
+box-shadow:0px 2px 8px rgba(0,0,0,0.1);
+
+}
+
+.tabla-tickets{
+
+width:100%;
+border-collapse:collapse;
+
+}
+
+.tabla-tickets th{
+
+background:#e9ecf2;
+padding:12px;
+text-align:left;
+
+}
+
+.tabla-tickets td{
+
+padding:10px;
+border-bottom:1px solid #ddd;
+
+}
+
+.tabla-tickets tr:hover{
+
+background:#f1f4f9;
+
+}
+
+
+/* BOTON */
+
+.boton-ver{
+
+background:var(--verde-oscuro);
+color:white;
+padding:6px 12px;
+border-radius:5px;
+text-decoration:none;
+font-size:14px;
+
+}
+
+.boton-ver:hover{
+
+background:#2563eb;
+
+}
+
+
+/* ESTADOS */
+
+.estado.abierto{
+
+color:green;
+font-weight:bold;
+
+}
+
+.estado.proceso{
+
+color:orange;
+font-weight:bold;
+
+}
+
+.estado.cerrado{
+
+color:red;
+font-weight:bold;
+
+}
+
+/* BOTONES ANTERIOR / SIGUIENTE */
+.pagina-btn{
+background:#1f3c88;
+color:white;
+padding:8px 16px;
+border-radius:6px;
+text-decoration:none;
+font-weight:500;
+transition:0.2s;
+box-shadow:0 2px 5px rgba(0,0,0,0.15);
+}
+
+.btn-limpiar{
+padding:8px 14px;
+background:#777;
+color:white;
+text-decoration:none;
+border-radius:6px;
+margin-left:10px;
+font-size:14px;
+}
+
+.btn-limpiar:hover{
+background:#555;
+}
+
+.btn-descargar {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    background-color: #27E1C1;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+/* ================== BUSCADOR Y FILTROS ================== */
+
+.buscador{
+    margin-bottom:20px;
+}
+
+.buscador form{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    align-items:center;
+    background:var(--gris-claro);
+    padding:15px;
+    border-radius:10px;
+    border:1px solid #e3e6eb;
+}
+
+/* INPUT BUSQUEDA */
+
+.buscador input[type="text"]{
+    flex:1;
+    min-width:250px;
+    padding:10px 14px;
+    border-radius:8px;
+    border:1px solid #d1d5db;
+    font-size:14px;
+    transition:0.2s;
+}
+
+.buscador input[type="text"]:focus{
+    outline:none;
+    border-color:var(--azul);
+    box-shadow:0 0 0 2px rgba(98,113,249,0.15);
+}
+
+/* SELECT FILTROS */
+
+.buscador select{
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid #d1d5db;
+    font-size:14px;
+    background:white;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.buscador select:focus{
+    outline:none;
+    border-color:var(--azul);
+    box-shadow:0 0 0 2px rgba(98,113,249,0.15);
+}
+
+/* BOTON BUSCAR */
+
+.buscador button{
+    padding:10px 16px;
+    border:none;
+    border-radius:8px;
+    background:var(--azul);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.buscador button:hover{
+    background:var(--azul-oscuro);
+}
+
+/* BOTON LIMPIAR */
+
+.btn-limpiar{
+    padding:10px 16px;
+    background:#6b7280;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-size:14px;
+    transition:0.2s;
+}
+
+.btn-limpiar:hover{
+    background:#4b5563;
+}
+
+/* RESPONSIVE */
+
+@media (max-width:768px){
+
+.buscador form{
+    flex-direction:column;
+    align-items:stretch;
+}
+
+.buscador input,
+.buscador select,
+.buscador button,
+.btn-limpiar{
+    width:100%;
+}
+
+}

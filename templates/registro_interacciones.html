@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/styles.css') }}">
+    
+    <link rel="preload" href="{{ url_for('static', filename='estilos/interacciones.css') }}" as="style">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/interacciones.css') }}">
 
     <title>Nuevo Ticket</title>
 </head>
@@ -9,38 +11,65 @@
     <header>
  <h1>inphonity </h1>
     </header>
-    <nav>
-       <a href="/inicio_cc">Inicio</a>
-        <a href="/tickets">Detalle de ticket</a>
-        <a href="/">Crear ticket</a>
-    
+<nav>
+    {% if rol == "ejecutivo" %}
+        <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Historial</a>
+        <a href="/">Crear interaccion</a> 
         
-    </nav>
+    {% elif rol == "soporte" %}
+            <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Historial</a>
+        <a href="/">Crear ticket</a>
+        <a href="/registro_interacciones">Registrar interaccion</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/soporte">Panel Soporte</a>
+        
+    {% endif %}
+    <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+</nav>
 
 <form method="POST" action="/crear_ticket">
-
+<h2> CREAR INTERACCION</h2>
 <h3>👤 Datos del Ejecutivo</h3>
-Nombre: <input type="text" name="ejecutivo_nombre"><br>
-<br>
-Email: <input type="email" name="ejecutivo_email"><br>
+Nombre:
+<select name="ejecutivo_nombre">
+        <option>Seleccione</option>
+        <option value="DAVID MORA ">DAVID MORA </option>
+        <option value="CESAR OCTAVIO SANTOS PERES">CESAR OCTAVIO SANTOS PERES</option>
+        <option value="FATIMA GUADALUPE MENDOZA SILIAS">FATIMA GUADALUPE MENDOZA SILIAS </option>
+        <option value="VICTOR DE JESUS GOMEZ ZEA">VICTOR DE JESUS GOMEZ ZEA </option>
+        <option value="MANUEL ALEJANDRO GONZALEZ RIOS">MANUEL ALEJANDRO GONZALEZ RIOS </option>
+    </select><br><br>
 
 <h3>👥 Cliente</h3>
 Nombre: <input type="text" name="cliente_nombre"><br>
 <br>
 Correo: <input type="email" name="cliente_correo"><br>
 <br>
-DN Afectado: <input type="text" name="dn_afectado"><br>
-<br>
-DN Contacto: <input type="text" name="dn_contacto"><br>
-<br>
-Rol: <input type="text" name="rol"><br>
-<br>
-Canal de contacto: <input type="text" name="canal"><br>
+DN Afectado: <input type="text" name="dn_afectado" pattern="\d{10}" maxlength="10" minlength="10" required title="A 10 números"><br><br>
+DN Contacto: <input type="text" name="dn_contacto" pattern="\d{10}" maxlength="10" minlength="10" required title="A 10 números"><br><br>
 
+Rol: <select name="rol" id="rol" onchange="mostrarCampos()">
+    <option value="seleccione">Seleccione</option>
+    <option value="Vendedor">Vendedor</option>
+    <option value="Socio">Socio</option>
+    <option value="inphonity">inphonity</option>
+</select><br><br>
+Canal de contacto:
+<select name="canal" id="canal" onchange="mostrarCampos()">
+    <option value="seleccione">Seleccione</option>
+    <option value="VOZ">VOZ</option>
+    <option value="CHAT">CHAT</option>
+    <option value="WHATSAPP">WHATSAPP</option>
+    <option value="Instagram">Instagram</option>
+    <option value="Facebook">Facebook</option>
+</select><br><br>
+Link de genesys: <input type="text" name="link"><br>
 
 <!-- ================= interaccion ================= -->
 
-    <h3>📝 interacciones</h3>
+    <h3>Motivo de la interaccion</h3>
     Descripción de la interaccion: <input type="text" name="descripcion_error"><br>
 <input type="hidden" name="categoria" value="interaccion">
 
@@ -55,6 +84,9 @@ Canal de contacto: <input type="text" name="canal"><br>
     </h3>
 
 </div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="/static/js/manager.js"></script>
 
 </body>
 </html>

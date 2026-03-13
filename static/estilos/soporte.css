@@ -1,0 +1,208 @@
+/* ================== PALETA DE COLORES ================== */
+:root {
+    --blanco: #FFFFFF;
+    --negro: #000000;
+    --verde: #27E1C1;
+    --azul: #6271F9;
+    --verde-oscuro: #28C7AC;
+    --azul-oscuro: #4454E2;
+    --amarillo: #FDB827;
+    --gris-claro: #F2F5F6;
+    --lila: #E8DAF8;
+    --azul-claro: #D4F1FF;
+}
+body{
+font-family: Arial, Helvetica, sans-serif;
+}
+/* Contenedor principal */
+.contenedor {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* ================== HEADER ================== */
+header {
+    background-color: var(--negro);
+    color: var(--blanco);
+    text-align: center;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3.5rem;
+}
+
+/* ================== NAV ================== */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    background-color: var(--verde);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--negro);
+    font-weight: bold;
+    padding: 0.5rem 1.2rem;
+    transition: .3s;
+}
+
+nav a:hover {
+    background-color: var(--verde-oscuro);
+    color: var(--blanco);
+    border-radius: 5px;
+}
+
+
+
+/* Tablas de tickets */
+.tabla-tickets-abiertos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    background-color: #fff;
+}
+
+.tabla-tickets-abiertos th, .tabla-tickets-abiertos td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.tabla-tickets-abiertos th {
+    background-color: #28C7AC;
+    color: #fff;
+    font-weight: 600;
+}
+
+.tabla-tickets-abiertos tbody tr:nth-child(even) {
+    background-color: #f5f6fa;
+}
+
+.tabla-tickets-abiertos tbody tr:hover {
+    background-color: #d6e0f5;
+}
+
+/* Tablas de tickets en proceso */
+.tabla-tickets-proceso {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    background-color: #fff;
+}
+
+.tabla-tickets-proceso th, .tabla-tickets-proceso td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.tabla-tickets-proceso th {
+    background-color: #FDB827;
+    color: #fff;
+    font-weight: 600;
+}
+
+.tabla-tickets-proceso tbody tr:nth-child(even) {
+    background-color: #f5f6fa;
+}
+
+.tabla-tickets-proceso tbody tr:hover {
+    background-color: #d6e0f5;
+}
+
+
+/* Tablas de tickets */
+.tabla-tickets {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    background-color: #fff;
+}
+
+.tabla-tickets th, .tabla-tickets td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.tabla-tickets th {
+    background-color: #6271F9;
+    color: #fff;
+    font-weight: 600;
+}
+
+.tabla-tickets tbody tr:nth-child(even) {
+    background-color: #f5f6fa;
+}
+
+.tabla-tickets tbody tr:hover {
+    background-color: #d6e0f5;
+}
+
+/* Estados */
+.estado.abierto {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.estado.en-proceso {
+    color: #f9a825;
+    font-weight: 600;
+}
+
+.estado.cerrado {
+    color: red;
+    font-weight: 600;
+}
+
+/* Botones */
+.boton-ver {
+    text-decoration: none;
+    background-color: #28c7ac;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.boton-ver:hover {
+    background-color: #1e3799;
+}
+
+/* Botones de descarga */
+.btn-descargar {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    background-color: #27E1C1;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-descargar:hover {
+    background-color: #1e3799;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tabla-tickets th, .tabla-tickets td {
+        font-size: 0.85rem;
+        padding: 8px 10px;
+    }
+}

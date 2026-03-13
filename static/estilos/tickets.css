@@ -1,0 +1,210 @@
+/* ================== PALETA DE COLORES ================== */
+:root {
+    --blanco: #FFFFFF;
+    --negro: #000000;
+    --verde: #27E1C1;
+    --azul: #6271F9;
+    --verde-oscuro: #28C7AC;
+    --azul-oscuro: #4454E2;
+    --amarillo: #FDB827;
+    --gris-claro: #F2F5F6;
+    --lila: #E8DAF8;
+    --azul-claro: #D4F1FF;
+}
+
+.tickets-section{
+padding:20px;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+.titulo{
+margin-bottom:20px;
+}
+
+/* ================== HEADER ================== */
+header {
+    background-color: var(--negro);
+    color: var(--blanco);
+    text-align: center;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3.5rem;
+}
+
+/* ================== NAV ================== */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    background-color: var(--verde);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--negro);
+    font-weight: bold;
+    padding: 0.5rem 1.2rem;
+    transition: .3s;
+}
+
+nav a:hover {
+    background-color: var(--verde-oscuro);
+    color: var(--blanco);
+    border-radius: 5px;
+}
+
+.tabla-tickets-abiertos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    background-color: #fff;
+}
+
+.tabla-tickets-abiertos thead{
+background:#28C7AC;
+color:white;
+}
+
+.tabla-tickets-abiertos th{
+padding:12px;
+text-align:left;
+}
+
+.tabla-tickets-abiertos td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+.tabla-tickets-abiertos tr:hover{
+background:#f5f5f5;
+}
+
+
+.tabla-tickets-proceso {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    background-color: #fff;
+}
+.tabla-tickets-proceso thead{
+background:#FDB827;
+color:white;
+}
+
+.tabla-tickets-proceso th{
+padding:12px;
+text-align:left;
+}
+
+.tabla-tickets-proceso td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+.tabla-tickets-proceso tr:hover{
+background:#f5f5f5;
+}
+
+
+
+
+
+
+.tabla-tickets-cerrado {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    background-color: #fff;
+}
+
+.tabla-tickets-cerrado thead{
+background:#6271F9;
+color:white;
+}
+
+.tabla-tickets-cerrado th{
+padding:12px;
+text-align:left;
+}
+
+.tabla-tickets-cerrado td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+.tabla-tickets-cerrado tr:hover{
+background:#f5f5f5;
+}
+
+.estado{
+padding:4px 10px;
+border-radius:6px;
+font-size:12px;
+color:white;
+}
+
+.estado.abierto{
+background:#2ecc71;
+}
+
+.estado.proceso{
+background:#f39c12;
+}
+
+.estado.cerrado{
+background:#e74c3c;
+}
+
+.btn-ver{
+background:#3498db;
+color:white;
+padding:6px 12px;
+border-radius:6px;
+text-decoration:none;
+font-size:13px;
+}
+
+.btn-ver:hover{
+background:#2980b9;
+}
+
+.paginacion{
+margin-top:20px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.paginacion a{
+padding:6px 12px;
+background:#ecf0f1;
+border-radius:6px;
+text-decoration:none;
+color:#333;
+}
+
+.paginacion a:hover{
+background:#dcdde1;
+}
+
+.paginacion a.activo{
+background:#3498db;
+color:white;
+}
+

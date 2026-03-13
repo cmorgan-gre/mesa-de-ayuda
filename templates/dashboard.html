@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Soporte</title>
+    <link rel="preload" href="{{ url_for('static', filename='estilos/dashboard.css') }}" as="style">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/dashboard.css') }}">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+</head>
+<body>
+    <header>
+        <h1>inphonity</h1>
+    </header>
+<nav>
+    {% if rol == "ejecutivo" %}
+        <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Historial</a>
+        <a href="/">Crear interaccion</a> 
+        
+    {% elif rol == "soporte" %}
+            <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Historial</a>
+        <a href="/">Crear ticket</a>
+        <a href="/registro_interacciones">Registrar interaccion</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/soporte">Panel Soporte</a>
+        
+    {% endif %}
+    <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+</nav>
+
+
+    <div class="dashboard-container">
+
+        <!-- MÉTRICAS PRINCIPALES -->
+        <div class="metrics">
+            <div class="metric-card">
+                <h3>Tickets Abiertos</h3>
+                <p>{{ total_abiertos }}</p>
+            </div>
+            <div class="metric-card">
+                <h3>Tickets En Proceso</h3>
+                <p>{{ total_en_proceso }}</p>
+            </div>
+            <div class="metric-card">
+                <h3>Tickets Cerrados</h3>
+                <p>{{ total_cerrados }}</p>
+            </div>
+            <div class="metric-card">
+                <h3>Tiempo Promedio de vida del ticket</h3>
+                <p>{{ tiempo_promedio }}</p>
+            </div>
+        </div>
+
+        <!-- GRÁFICOS -->
+        <div class="charts">
+            <div class="chart-card">
+                <h2>Historial de Tickets por Categoría</h2>
+                <canvas id="categoriaChart"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <h2>Interacciones por Ejecutivo</h2>
+                <canvas id="ejecutivoChart"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <h2>Últimos 30 días</h2>
+                <canvas id="lineChart"></canvas>
+            </div>
+
+           <div class="chart-card">
+                <h2>Tiempo que llevan abiertos los tickets</h2>
+                <canvas id="tiempoAbiertoChart"></canvas>
+           </div>
+
+        </div>
+
+    </div>
+
+    <script>
+// Gráfico de categorías
+const ctxCat = document.getElementById('categoriaChart').getContext('2d');
+
+new Chart(ctxCat, {
+    type: 'bar',
+    data: {
+        labels: {{ categorias | safe }},
+        datasets: [{
+            label: 'Tickets por Categoría',
+            data: {{ tickets_por_categoria | safe }},
+            backgroundColor: 'rgba(54, 162, 235, 0.8)'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            datalabels: {
+                anchor: 'center',
+                align: 'center',
+                color: '#fff',
+                font: {
+                    weight: 'bold',
+                    size: 14
+                }
+            }
+        }
+    },
+    plugins: [ChartDataLabels]
+});
+// Gráfico de ejecutivos
+const ctxEje = document.getElementById('ejecutivoChart').getContext('2d');
+
+new Chart(ctxEje, {
+    type: 'pie',
+    data: {
+        labels: {{ ejecutivos | safe }},
+        datasets: [{
+            data: {{ tickets_por_ejecutivo | safe }},
+            backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                '#4BC0C0',
+                '#9966FF',
+                '#FF9F40',
+                '#C9CBCF'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            datalabels: {
+                color: '#fff',
+                font: {
+                    weight: 'bold',
+                    size: 16
+                },
+                formatter: (value) => value
+            }
+        }
+    },
+    plugins: [ChartDataLabels]
+});
+
+        // Evolución de tickets
+        const ctxLine = document.getElementById('lineChart').getContext('2d');
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: {{ fechas | safe }},
+                datasets: [{
+                    label: 'Tickets creados',
+                    data: {{ tickets_por_fecha | safe }},
+                    fill: false,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    tension: 0.1
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+
+
+// Duración de tickets
+
+const ctxTiempo = document.getElementById('tiempoAbiertoChart').getContext('2d');
+
+const fechasCreacion = {{ fechas_creacion_activos | safe }};
+
+new Chart(ctxTiempo, {
+    type: 'bar',
+    data: {
+        labels: {{ labels_activos | safe }},
+        datasets: [{
+            label: 'Horas abiertas',
+            data: {{ tiempos_activos | safe }},
+            backgroundColor: '#FF6384'
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+
+                        let horas = context.raw;
+                        let fecha = fechasCreacion[context.dataIndex];
+
+                        return [
+                            "Horas abiertas: " + horas,
+                            "Fecha creación: " + fecha
+                        ];
+                    }
+                }
+            }
+        },
+
+        scales: {
+            x: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Horas abiertas'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Tickets'
+                }
+            }
+        }
+    }
+});
+
+    </script>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/manager.js') }}"></script>
+
+</body>
+</html>

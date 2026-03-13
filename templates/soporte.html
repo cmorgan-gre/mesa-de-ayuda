@@ -1,75 +1,167 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/styles.css') }}">
 
+<head>
+    
+    <link rel="preload" href="{{ url_for('static', filename='estilos/soporte.css') }}" as="style">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/soporte.css') }}">
     <title>Panel de Soporte</title>
 </head>
-<body>
-  <header>
- <h1>inphonity </h1>
-    </header>
-    <nav>
-       <a href="/inicio_cc">Inicio</a>
 
+<body>
+
+<header>
+    <h1>inphonity</h1>
+</header>
+
+<nav>
+    {% if rol == "ejecutivo" %}
+        <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Historial</a>
         <a href="/">Crear ticket</a>
         <a href="/registro_interacciones">Registrar interaccion</a>
+    {% elif rol == "soporte" %}
+            <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Historial</a>
+        <a href="/">Crear ticket</a>
+        <a href="/registro_interacciones">Registrar interaccion</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/soporte">Panel Soporte</a>
         
-    </nav>
-<h1>🛠 Panel de Soporte</h1>
-<p>Gestión de tickets activos</p>
-<hr>
+    {% endif %}
+    <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+</nav>
 
-<h2>🟢 Tickets Abiertos</h2>
-{% for t in abiertos %}
-<div style="border:1px solid #2e7d32; padding:10px; margin-bottom:10px; background:#e8f5e9;">
-    🎫 <b>TT-{{ t.id }}</b> |
-    {{ t.categoria }} |
-    {{ t.cliente_nombre }} |
-    {{ t.estatus }}
-    <a href="{{ url_for('soporte_detalle', id=t.id) }}">🔍 Ver detalle</a>
+
+<div class="contenedor">
+
+    
+
+    <div class="tabla-contenedor">
+
+        <!-- TICKETS ABIERTOS -->
+        
+        <h3>Tickets Abiertos</h3>
+        <table class="tabla-tickets-abiertos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Motivo</th>
+                    <th>Cliente</th>
+                    <th>Correo</th>
+                    <th>DN Afectado</th>
+                    <th>Estatus</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if abiertos %}
+                    {% for t in abiertos %}
+                    <tr>
+                        <td>TT-{{ t.id }}</td>
+                        <td>{{ t.categoria }}</td>
+                        <td>{{ t.cliente_nombre }}</td>
+                        <td>{{ t.cliente_correo }}</td>
+                        <td>{{ t.dn_afectado }}</td>
+                        <td class="estado abierto">{{ t.estatus }}</td>
+                        <td><a class="boton-ver" href="{{ url_for('soporte_detalle', id=t.id) }}">Ver Ticket</a></td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="7" style="text-align:center;">No hay tickets abiertos</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <br>
+
+        <!-- TICKETS EN PROCESO -->
+        <h3> Tickets En Proceso</h3>
+        <table class="tabla-tickets-proceso">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Motivo</th>
+                    <th>Cliente</th>
+                    <th>Correo</th>
+                    <th>DN Afectado</th>
+                    <th>Estatus</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if en_proceso %}
+                    {% for t in en_proceso %}
+                    <tr>
+                        <td>TT-{{ t.id }}</td>
+                        <td>{{ t.categoria }}</td>
+                        <td>{{ t.cliente_nombre }}</td>
+                        <td>{{ t.cliente_correo }}</td>
+                        <td>{{ t.dn_afectado }}</td>
+                        <td class="estado en-proceso">{{ t.estatus }}</td>
+                        <td><a class="boton-ver" href="{{ url_for('soporte_detalle', id=t.id) }}">Ver Ticket</a></td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="7" style="text-align:center;">No hay tickets en proceso</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <br>
+
+ <!-- TICKETS CERRADOS -->
+<h3> Tickets Cerrados</h3>
+<table class="tabla-tickets">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Motivo</th>
+            <th>Cliente</th>
+            <th>Correo</th>
+            <th>DN Afectado</th>
+            <th>Estatus</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if cerrados %}
+            {% for t in cerrados %}
+            <tr>
+                <td>TT-{{ t.id }}</td>
+                <td>{{ t.categoria }}</td>
+                <td>{{ t.cliente_nombre }}</td>
+                <td>{{ t.cliente_correo }}</td>
+                <td>{{ t.dn_afectado }}</td>
+                <td class="estado cerrado">{{ t.estatus }}</td>
+                <td><a class="boton-ver" href="{{ url_for('soporte_detalle', id=t.id) }}">Ver Ticket</a></td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr><td colspan="7" style="text-align:center;">No hay tickets cerrados</td></tr>
+        {% endif %}
+    </tbody>
+</table>
+
+<!-- PAGINACIÓN CERRADOS -->
+<div class="paginacion-cerrados">
+    {% if page_cerrados > 1 %}
+        <a href="{{ url_for('panel_soporte', page_cerrados=page_cerrados-1) }}">⬅ Anterior</a>
+    {% endif %}
+
+    <span>Página {{ page_cerrados }} de {{ total_paginas_cerrados }}</span>
+
+    {% if page_cerrados < total_paginas_cerrados %}
+        <a href="{{ url_for('panel_soporte', page_cerrados=page_cerrados+1) }}">Siguiente ➡</a>
+    {% endif %}
 </div>
-{% else %}
-<p>No hay tickets abiertos</p>
-{% endfor %}
+        <!-- DESCARGAS -->
+        <a href="{{ url_for('descargar_db') }}" class="btn-descargar">💾 Descargar BD</a>
+        <a href="{{ url_for('descargar_excel') }}" class="btn-descargar">💾 Descargar Excel</a>
 
-<hr>
-
-<h2>🟡 Tickets En Proceso</h2>
-{% for t in en_proceso %}
-<div style="border:1px solid #f9a825; padding:10px; margin-bottom:10px; background:#fff8e1;">
-    🎫 <b>TT-{{ t.id }}</b> |
-    {{ t.categoria }} |
-    {{ t.cliente_nombre }} |
-    {{ t.estatus }}
-    <a href="/soporte/ticket/{{ t.id }}">🔍 Ver detalle</a>
+    </div>
 </div>
-{% else %}
-<p>No hay tickets en proceso</p>
-{% endfor %}
-<hr>
-
-
-
-<h2> Tickets CERRADOS</h2>
-{% for t in cerrados %}
-<div style="border:1px solid #E8DAF8; padding:10px; margin-bottom:10px; background:#fff8e1;">
-    🎫 <b>TT-{{ t.id }}</b> |
-    {{ t.categoria }} |
-    {{ t.cliente_nombre }} |
-    {{ t.estatus }}
-    <a href="/soporte/ticket/{{ t.id }}">🔍 Ver detalle</a>
-</div>
-{% else %}
-<p>No hay tickets en cerrados</p>
-{% endfor %}
-<hr>
-
-
-
-
-<a href="{{ url_for('descargar_db') }}" class="btn-descargar">💾 Descargar BD</a>
-<a href="{{ url_for('descargar_excel') }}" class="btn-descargar">💾 Descargar Excel</a>
-
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="/static/js/manager.js"></script>
 </body>
 </html>

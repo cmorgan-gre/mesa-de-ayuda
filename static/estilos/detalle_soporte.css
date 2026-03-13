@@ -1,0 +1,175 @@
+/* ================== PALETA DE COLORES ================== */
+:root {
+    --blanco: #FFFFFF;
+    --negro: #000000;
+    --verde: #27E1C1;
+    --azul: #6271F9;
+    --verde-oscuro: #28C7AC;
+    --azul-oscuro: #4454E2;
+    --amarillo: #FDB827;
+    --gris-claro: #F2F5F6;
+    --lila: #E8DAF8;
+    --azul-claro: #D4F1FF;
+}
+body{
+font-family: Arial, Helvetica, sans-serif;
+}
+/* Contenedor principal */
+.contenedor-ticket {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fefefe;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* ================== HEADER ================== */
+header {
+    background-color: var(--negro);
+    color: var(--blanco);
+    text-align: center;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3.5rem;
+}
+
+/* ================== NAV ================== */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    background-color: var(--verde);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--negro);
+    font-weight: bold;
+    padding: 0.5rem 1.2rem;
+    transition: .3s;
+}
+
+nav a:hover {
+    background-color: var(--verde-oscuro);
+    color: var(--blanco);
+    border-radius: 5px;
+}
+
+/* Secciones */
+.seccion-ticket {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background-color: #f9f9f9;
+    border-left: 5px solid #2980b9;
+    border-radius: 8px;
+}
+.seccion-ticket h3 {
+    margin-top: 0;
+    color: #34495e;
+}
+
+/* Evidencias */
+.lista-adjuntos li {
+    margin: 6px 0;
+}
+.lista-adjuntos a {
+    color: #2980b9;
+    text-decoration: none;
+}
+.lista-adjuntos a:hover {
+    text-decoration: underline;
+}
+
+/* Estatus */
+.estatus {
+    font-weight: bold;
+    color: #e67e22;
+}
+
+/* Comentarios estilo chat */
+.comentarios {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.comentario {
+    background-color: #ecf0f1;
+    padding: 10px 12px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.comentario .remitente {
+    font-weight: 600;
+    margin-right: 6px;
+    color: #2c3e50;
+}
+.comentario .mensaje {
+    color: #34495e;
+}
+
+/* Formulario */
+.form-actualizar label {
+    font-weight: 600;
+}
+.form-actualizar select, 
+.form-actualizar textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+.form-actualizar button {
+    padding: 10px 16px;
+    background-color: #2980b9;
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+.form-actualizar button:hover {
+    background-color: #1f5f85;
+}
+
+/* Botón volver */
+.btn-volver {
+    display: inline-block;
+    padding: 8px 14px;
+    background-color: #95a5a6;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+.btn-volver:hover {
+    background-color: #7f8c8d;
+}
+.paginacion-cerrados {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+}
+
+.paginacion-cerrados a {
+    padding: 6px 12px;
+    background-color: #2980b9;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.paginacion-cerrados a:hover {
+    background-color: #1f5f85;
+}

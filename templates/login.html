@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>inphonity</title>
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='estilos/login.css') }}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="overlay">
+
+    <div class="login-box">
+
+        <div class="header">
+            <h1>inphonity</h1>
+            <p>Contac Center</p>
+        </div>
+
+        {% if error %}
+        <div class="error">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="POST">
+
+            <div class="input-group">
+                <label>Usuario</label>
+
+                <div class="input-field">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" name="username" placeholder="Ingresa tu usuario" required>
+                </div>
+
+            </div>
+
+            <div class="input-group">
+                <label>Contraseña</label>
+
+                <div class="input-field">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" name="password" placeholder="Ingresa tu contraseña" required>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn-login">
+                Ingresar
+            </button>
+
+        </form>
+
+        <div class="footer">
+            inphonity Contact Center
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

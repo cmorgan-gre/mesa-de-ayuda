@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/styles.css') }}">
+    
+    <link rel="preload" href="{{ url_for('static', filename='estilos/crear.css') }}" as="style">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/crear.css') }}">
     <title>Nuevo Ticket</title>
 </head>
 <body>
@@ -9,40 +11,77 @@
         <h1>inphonity</h1>
     </header>
 
-    <nav>
+<nav>
+    {% if rol == "ejecutivo" %}
         <a href="/inicio_cc">Inicio</a>
-        <a href="/tickets">Detalle de ticket</a>
+        <a href="/tickets">Historial</a>
+        <a href="/">Crear interaccion</a> 
+        
+    {% elif rol == "soporte" %}
+            <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Historial</a>
+        <a href="/">Crear ticket</a>
         <a href="/registro_interacciones">Registrar interaccion</a>
-    </nav>
-
+        <a href="/dashboard">Dashboard</a>
+        <a href="/soporte">Panel Soporte</a>
+        
+    {% endif %}
+    <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+</nav>
 <form method="POST" action="/crear_ticket" enctype="multipart/form-data">
-
+<h2> CREAR TICKET</h2>
 <h3>👤 Datos del Ejecutivo</h3>
-Nombre: <input type="text" name="ejecutivo_nombre"><br><br>
-Email: <input type="email" name="ejecutivo_email"><br>
+Nombre:
+<select name="ejecutivo_nombre">
+        <option>Seleccione</option>
+        <option value="DAVID MORA">DAVID MORA </option>
+        <option value="CESAR OCTAVIO SANTOS">CESAR OCTAVIO SANTOS</option>
+        <option value="FATIMA GUADALUPE MENDOZA SILIAS">FATIMA GUADALUPE MENDOZA SILIAS </option>
+        <option value="VICTOR DE JESUS GOMEZ ZEA">VICTOR DE JESUS GOMEZ ZEA </option>
+        <option value="MANUEL ALEJANDRO GONZALEZ RIOS">MANUEL ALEJANDRO GONZALEZ RIOS </option>
+    </select><br><br>
+
 
 <h3>👥 Cliente</h3>
 Nombre: <input type="text" name="cliente_nombre"><br><br>
 Correo: <input type="email" name="cliente_correo"><br><br>
-DN Afectado: <input type="text" name="dn_afectado"><br><br>
-DN Contacto: <input type="text" name="dn_contacto"><br><br>
-Rol: <input type="text" name="rol"><br><br>
-Canal de contacto: <input type="text" name="canal"><br>
+DN Afectado: <input type="text" name="dn_afectado" pattern="\d{10}" maxlength="10" minlength="10" required title="A 10 números"><br><br>
+DN Contacto: <input type="text" name="dn_contacto" pattern="\d{10}" maxlength="10" minlength="10" required title="A 10 números"><br><br>
+
+Rol: <select name="rol" id="rol" onchange="mostrarCampos()">
+    <option value="seleccione">Seleccione</option>
+    <option value="Vendedor">Vendedor</option>
+    <option value="Socio">Socio</option>
+    <option value="inphonity">inphonity</option>
+</select><br><br>
+
+
+Canal de contacto:
+<select name="canal" id="canal" onchange="mostrarCampos()">
+    <option value="seleccione">Seleccione</option>
+    <option value="VOZ">VOZ</option>
+    <option value="CHAT">CHAT</option>
+    <option value="WHATSAPP">WHATSAPP</option>
+    <option value="Instagram">Instagram</option>
+    <option value="Facebook">Facebook</option>
+</select><br><br>
 Link de genesys: <input type="text" name="link"><br>
 
-<h3>📂 Categoría</h3>
+<h3>Categoría</h3>
 <select name="categoria" id="categoria" onchange="mostrarCampos()">
     <option value="seleccione">Seleccione</option>
     <option value="llamadas">Llamadas</option>
     <option value="datos">Datos</option>
     <option value="sms">SMS</option>
     <option value="falla_total">Falla total</option>
+    <option value="bono">Bono de GB</option>
+    <option value="interaccion">interaccion</option>
     <option value="otros">Otros</option>
 </select>
 
 <!-- ================= DATOS ================= -->
 <div id="campos_datos" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
-    <h3>🌐 Datos para fallas en datos móviles</h3>
+    <h3> Datos móviles</h3>
     Descripcion del error: <input type="text" name="descripcion_error"><br>
     Tipo de afectación:
     <select name="tipo_afectacion">
@@ -61,7 +100,7 @@ Link de genesys: <input type="text" name="link"><br>
 
 <!-- ================= LLAMADAS ================= -->
 <div id="campos_llamadas" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
-    <h3>📞 Datos para fallas en llamadas</h3>
+    <h3> Llamadas</h3>
     Descripcion del error: <input type="text" name="descripcion_error"><br>
     Compañía: <input type="text" name="compania"><br>
     Número de prueba: <input type="text" name="numeros_prueba"><br>
@@ -76,7 +115,7 @@ Link de genesys: <input type="text" name="link"><br>
 
 <!-- ================= SMS ================= -->
 <div id="campos_sms" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
-    <h3>💬 Datos para fallas en SMS</h3>
+    <h3> SMS</h3>
     Descripcion del error: <input type="text" name="descripcion_error"><br>
     Compañía: <input type="text" name="compania"><br>
     Número de prueba: <input type="text" name="numero_prueba"><br>
@@ -89,7 +128,7 @@ Link de genesys: <input type="text" name="link"><br>
 
 <!-- ================= FALLA TOTAL ================= -->
 <div id="campos_falla_total" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
-    <h3>🚨 Falla Total</h3>
+    <h3> Falla Total</h3>
     Descripcion del error: <input type="text" name="descripcion_error"><br>
     Ubicación: <input type="text" name="ubicacion"><br>
     Validaciones realizadas: <input type="text" name="validaciones"><br><br>
@@ -97,10 +136,17 @@ Link de genesys: <input type="text" name="link"><br>
     📎 Adjuntar evidencias:
     <input type="file" name="evidencias" accept=".jpg,.jpeg,.png,.pdf" multiple>
 </div>
+<!-- ================= bono ================= -->
+<div id="campos_bono" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
+    <h3> Bono de portabilidad </h3>
+    Descripcion del error: <input type="text" name="descripcion_error"><br><br>
 
+    📎 Adjuntar evidencias:
+    <input type="file" name="evidencias" accept=".jpg,.jpeg,.png,.pdf" multiple>
+</div>
 <!-- ================= OTROS ================= -->
 <div id="campos_otros" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
-    <h3>📝 Otros requerimientos</h3>
+    <h3> Otros requerimientos</h3>
     Descripcion del error: <input type="text" name="descripcion_error"><br><br>
 
     📎 Adjuntar evidencias:
@@ -109,11 +155,293 @@ Link de genesys: <input type="text" name="link"><br>
 
 <!-- ================= INTERACCION ================= -->
 <div id="campos_interaccion" style="display:none; border:1px solid #ccc; padding:10px; margin-top:10px;">
-    <h3>📝 Interacciones</h3>
-    Descripcion del error: <input type="text" name="descripcion_error"><br><br>
+    <h3> Interacciones</h3>
+   Descripcion de la interaccion: <input type="text" name="descripcion_error"><br><br>
+
+
+
+    <label>Tipo de solicitud</label>
+
+<select id="descripcion_solicitud" name="descripcion_solicitud" onchange="mostrarSubopciones()">
+
+<option value="">Seleccione</option>
+
+<option value="ACTUALIZACION DE DATOS">ACTUALIZACION DE DATOS</option>
+<option value="SOLICITUD DE CAMBIO DE NIR">SOLICITUD DE CAMBIO DE NIR</option>
+<option value="CAMBIO DE PLAN">CAMBIO DE PLAN</option>
+<option value="CANCELACIÓN DE LINEA">CANCELACIÓN DE LINEA</option>
+<option value="RETENCION">RETENCION</option>
+<option value="DISPOSITIVO BLOQUEADO / NO LIBERADO">DISPOSITIVO BLOQUEADO / NO LIBERADO</option>
+<option value="MODELO DE NEGOCIO">MODELO DE NEGOCIO</option>
+<option value="APP">APP</option>
+<option value="LOGISTICA">LOGISTICA</option>
+<option value="ONBOARDING">ONBOARDING</option>
+<option value="PAQUETES ADICIONALES">PAQUETES ADICIONALES</option>
+<option value="TRANSFERENCIA eSIM">TRANSFERENCIA eSIM</option>
+<option value="INSTALACION">INSTALACION</option>
+<option value="PORTABILIDAD">PORTABILIDAD</option>
+<option value="SOPORTE TÉCNICO">SOPORTE TÉCNICO</option>
+<option value="REPOSICION">REPOSICION</option>
+<option value="CAPACITACIÓN">CAPACITACIÓN</option>
+<option value="REFACTURACIONES">REFACTURACIONES</option>
+<option value="DISTRIBUIDORES">DISTRIBUIDORES</option>
+<option value="ACTIVACION">ACTIVACION</option>
+<option value="COMPATIBILIDAD">COMPATIBILIDAD</option>
+<option value="INBOUND">INBOUND</option>
+<option value="PROMOCIONES">PROMOCIONES</option>
+<option value="ATENCION AL CLIENTE">ATENCION AL CLIENTE</option>
+<option value="MIFI">MIFI</option>
+<option value="CAMPAÑAS">CAMPAÑAS</option>
+
+</select>
+
+<br><br>
+
+<label>Descripción de interacción</label>
+
+<select id="descripcion_interaccion" name="descripcion_interaccion">
+<option value="">Seleccione una opción</option>
+</select>
+
+
+
+<!-- ================= SUBMENU DE CODIGOS DE CONCLUCION ================= -->
+<script>
+
+function mostrarSubopciones(){
+
+let categoria = document.getElementById("descripcion_solicitud").value
+let select = document.getElementById("descripcion_interaccion")
+
+select.innerHTML = `<option value="">Seleccione una opción</option>`
+
+// ACTUALIZACION DE DATOS
+if(categoria == "ACTUALIZACION DE DATOS"){
+
+select.innerHTML += `<option value="Actualización de datos (Personales, Correo)">Actualización de datos (Personales, Correo)</option>`
+select.innerHTML += `<option value="Vinculacion de línea (Persona Física)">Vinculacion de línea (Persona Física)</option>`
+select.innerHTML += `<option value="Vinculacion de línea (Persona Moral)">Vinculacion de línea (Persona Moral)</option>`
+
+}
+
+// SOLICITUD DE CAMBIO DE NIR
+if(categoria == "SOLICITUD DE CAMBIO DE NIR"){
+
+select.innerHTML += `<option value="Dudas sobre cambio de NIR">Dudas sobre cambio de NIR</option>`
+select.innerHTML += `<option value="Solicitud cambio de NIR">Solicitud cambio de NIR</option>`
+
+}
+
+// CAMBIO DE PLAN
+if(categoria == "CAMBIO DE PLAN"){
+
+select.innerHTML += `<option value="Cambio de plan / Upgrade">Cambio de plan / Upgrade</option>`
+select.innerHTML += `<option value="Cambio de plan / Downgrade">Cambio de plan / Downgrade</option>`
+select.innerHTML += `<option value="Cambio de plan / Dudas Generales">Cambio de plan / Dudas Generales</option>`
+
+}
+
+// CANCELACION
+if(categoria == "CANCELACIÓN DE LINEA"){
+
+select.innerHTML += `<option value="Cancelacion de Linea">Cancelacion de Linea</option>`
+
+}
+
+// RETENCION
+if(categoria == "RETENCION"){
+
+select.innerHTML += `<option value="Retencion / Downgrade de plan">Retencion / Downgrade de plan</option>`
+
+}
+
+// MODELO DE NEGOCIO
+if(categoria == "MODELO DE NEGOCIO"){
+
+select.innerHTML += `<option value="Monto Cashback incorrecto">Monto Cashback incorrecto</option>`
+select.innerHTML += `<option value="Dudas cashback">Dudas cashback</option>`
+
+}
+
+// APP
+if(categoria == "APP"){
+
+select.innerHTML += `<option value="Problemas con app">Problemas con app</option>`
+
+}
+
+// LOGISTICA
+if(categoria == "LOGISTICA"){
+
+select.innerHTML += `<option value="Seguimiento a la entrega SIM">Seguimiento a la entrega SIM</option>`
+
+}
+
+// ONBOARDING
+if(categoria == "ONBOARDING"){
+
+select.innerHTML += `<option value="Onboarding / Compra Asistida">Onboarding / Compra Asistida</option>`
+select.innerHTML += `<option value="Compra Multilinea">Compra Multilinea</option>`
+
+}
+
+// PAQUETES ADICIONALES
+if(categoria == "PAQUETES ADICIONALES"){
+
+select.innerHTML += `<option value="Pago en app">Pago en app</option>`
+select.innerHTML += `<option value="Pago con tarjeta">Pago con tarjeta</option>`
+select.innerHTML += `<option value="Pago transferencia">Pago transferencia</option>`
+select.innerHTML += `<option value="Pago en efectivo">Pago en efectivo</option>`
+select.innerHTML += `<option value="Pago aplicado">Pago aplicado</option>`
+select.innerHTML += `<option value="Paquetes adicionales 90 y 50">Paquetes adicionales 90 y 50</option>`
+
+}
+
+// TRANSFERENCIA ESIM
+if(categoria == "TRANSFERENCIA eSIM"){
+
+select.innerHTML += `<option value="Transferencia eSIM">Transferencia eSIM</option>`
+
+}
+
+// INSTALACION
+if(categoria == "INSTALACION"){
+
+select.innerHTML += `<option value="Instalacion de SIM fisica">Instalacion de SIM fisica</option>`
+select.innerHTML += `<option value="Instalacion de eSIM">Instalacion de eSIM</option>`
+
+}
+
+// PORTABILIDAD
+if(categoria == "PORTABILIDAD"){
+
+select.innerHTML += `<option value="Soporte técnico Portabilidad (Fallas en servicio después de la portabilidad)">Soporte técnico Portabilidad</option>`
+select.innerHTML += `<option value="Seguimiento portabilidad">Seguimiento portabilidad</option>`
+select.innerHTML += `<option value="Problemas bonos promocionales portabilidad">Problemas bonos promocionales portabilidad</option>`
+select.innerHTML += `<option value="Portabilidad (Error en proceso)">Portabilidad (Error en proceso)</option>`
+select.innerHTML += `<option value="Solicitud de portabilidad">Solicitud de portabilidad</option>`
+
+}
+
+// SOPORTE TECNICO
+if(categoria == "SOPORTE TÉCNICO"){
+
+select.innerHTML += `<option value="Problemas de cobertura">Problemas de cobertura</option>`
+select.innerHTML += `<option value="Problemas Llamadas">Problemas Llamadas</option>`
+select.innerHTML += `<option value="Problemas con datos">Problemas con datos</option>`
+select.innerHTML += `<option value="Problemas SMS">Problemas SMS</option>`
+select.innerHTML += `<option value="Paquetes internacionales de Roaming">Paquetes internacionales de Roaming</option>`
+
+}
+
+// REPOSICION
+if(categoria == "REPOSICION"){
+
+select.innerHTML += `<option value="Reposicion de SIM a eSIM">Reposicion de SIM a eSIM</option>`
+select.innerHTML += `<option value="Reposicion de eSIM a eSIM">Reposicion de eSIM a eSIM</option>`
+select.innerHTML += `<option value="Reposicion de SIM a SIM">Reposicion de SIM a SIM</option>`
+
+}
+
+// CAPACITACION
+if(categoria == "CAPACITACIÓN"){
+
+select.innerHTML += `<option value="Capacitacion / Conversacion de prueba">Capacitacion / Conversacion de prueba</option>`
+
+}
+
+// REFACTURACION
+if(categoria == "REFACTURACIONES"){
+
+select.innerHTML += `<option value="Dudas Refacturacion">Dudas Refacturacion</option>`
+
+}
+
+// DISTRIBUIDORES
+if(categoria == "DISTRIBUIDORES"){
+
+select.innerHTML += `<option value="Soporte técnico (App ventas)">Soporte técnico (App ventas)</option>`
+select.innerHTML += `<option value="Soporte tecnico (Solicitado)">Soporte tecnico (Solicitado)</option>`
+select.innerHTML += `<option value="Dudas Credito inphonity">Dudas Credito inphonity</option>`
+
+}
+
+// ACTIVACION
+if(categoria == "ACTIVACION"){
+
+select.innerHTML += `<option value="Activacion SIM Fisica">Activacion SIM Fisica</option>`
+
+}
+
+// COMPATIBILIDAD
+if(categoria == "COMPATIBILIDAD"){
+
+select.innerHTML += `<option value="Compatibilidad / Checar compatibilidad de equipo">Compatibilidad equipo</option>`
+
+}
+
+// INBOUND
+if(categoria == "INBOUND"){
+
+select.innerHTML += `<option value="Inbound / Cliente no contesto">Inbound / Cliente no contesto</option>`
+
+}
+
+// PROMOCIONES
+if(categoria == "PROMOCIONES"){
+
+select.innerHTML += `<option value="Promocion especial">Promocion especial</option>`
+select.innerHTML += `<option value="Promocion por antiguedad">Promocion por antiguedad</option>`
+
+}
+
+// ATENCION AL CLIENTE
+if(categoria == "ATENCION AL CLIENTE"){
+
+select.innerHTML += `<option value="Cliente molesto por exceso de llamadas">Cliente molesto por exceso de llamadas</option>`
+select.innerHTML += `<option value="Caso Atipico">Caso Atipico</option>`
+select.innerHTML += `<option value="Seguimiento whatsapp">Seguimiento whatsapp</option>`
+select.innerHTML += `<option value="Transferencia Canal Digital">Transferencia Canal Digital</option>`
+select.innerHTML += `<option value="Transferencia Agente">Transferencia Agente</option>`
+select.innerHTML += `<option value="Callback / No contesto">Callback / No contesto</option>`
+
+}
+
+// MIFI
+if(categoria == "MIFI"){
+
+select.innerHTML += `<option value="MIFI / Soporte técnico">MIFI / Soporte técnico</option>`
+select.innerHTML += `<option value="MIFI / Sin saldo">MIFI / Sin saldo</option>`
+select.innerHTML += `<option value="MIFI / Reposición de SIM FISICA">MIFI / Reposición de SIM FISICA</option>`
+select.innerHTML += `<option value="MIFI / Recarga">MIFI / Recarga</option>`
+
+}
+
+// CAMPAÑAS
+if(categoria == "CAMPAÑAS"){
+
+select.innerHTML += `<option value="Campaña / NIP incorrecto">Campaña / NIP incorrecto</option>`
+select.innerHTML += `<option value="Campaña / Barring">Campaña / Barring</option>`
+select.innerHTML += `<option value="Campaña / Port Out">Campaña / Port Out</option>`
+select.innerHTML += `<option value="Campaña / Cobranza">Campaña / Cobranza</option>`
+select.innerHTML += `<option value="Campaña / Welcome">Campaña / Welcome</option>`
+select.innerHTML += `<option value="Campaña / Vinculación">Campaña / Vinculación</option>`
+
+}
+
+}
+
+</script>
+
+
+
+
 
     📎 Adjuntar evidencias:
     <input type="file" name="evidencias" accept=".jpg,.jpeg,.png,.pdf" multiple>
+
+
+
 </div>
 
 <!-- ================= SELECCIONE ================= -->
@@ -122,8 +450,9 @@ Link de genesys: <input type="text" name="link"><br>
 </div>
 
 <br>
-<button type="submit">Guardar</button>
-
+<button type="submit" name="accion" value="cerrar">Guardar como Solucionado</button>
+<button type="submit" name="accion" value="n2">N2</button>
+<button type="submit" name="accion" value="pendiente">Marcar como Pendiente</button>
 </form>
 
 <script>
@@ -136,6 +465,7 @@ function mostrarCampos() {
         "campos_sms",
         "campos_falla_total",
         "campos_otros",
+        "campos_bono",
         "campos_interaccion",
         "campos_seleccione"
     ];
@@ -157,6 +487,9 @@ function mostrarCampos() {
     }
 }
 </script>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/notificaciones.js') }}"></script>
 
 </body>
 </html>

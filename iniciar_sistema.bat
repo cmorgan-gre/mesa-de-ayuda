@@ -1,23 +1,24 @@
 @echo off
-title SISTEMA TICKETS INPHONITY + NGROK
+title SERVIDOR MESA DE AYUDA LOCAL
 color 0A
-
-echo ==============================
-echo   INICIANDO SISTEMA TICKETS
-echo ==============================
 
 cd /d %~dp0
 
-echo Iniciando servidor Flask...
-start cmd /k "python app.py"
+echo ===============================
+echo INICIANDO SERVIDOR LOCAL
+echo ===============================
+echo.
 
-timeout /t 5 > nul
+:loop
 
-echo Iniciando tunel ngrok...
-start cmd /k "ngrok http 8000"
+echo Iniciando Flask...
+python app.py
 
 echo.
-echo ==============================
-echo   SISTEMA Y NGROK ACTIVOS
-echo ==============================
-pause
+echo ===============================
+echo El servidor se detuvo
+echo Reiniciando en 5 segundos...
+echo ===============================
+timeout /t 5 >nul
+
+goto loop

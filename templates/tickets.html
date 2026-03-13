@@ -1,34 +1,241 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/styles.css') }}">
 
-    <title>Tickets</title>
+
+<link rel="preload" href="{{ url_for('static', filename='estilos/detalle_tickets.css') }}" as="style">
+<link rel="stylesheet" href="{{ url_for('static', filename='estilos/detalle_tickets.css') }}">
+
+<title>Tickets</title>
+
 </head>
-<body>
-        <header>
- <h1>inphonity </h1>
-    </header>
-    <nav>
-       <a href="/inicio_cc">Inicio</a>
 
+<body>
+
+<header>
+<h1>inphonity</h1>
+</header>
+
+<nav>
+    {% if rol == "ejecutivo" %}
+        <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Historial</a>
+        <a href="/">Crear interaccion</a> 
+        
+    {% elif rol == "soporte" %}
+            <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Historial</a>
         <a href="/">Crear ticket</a>
         <a href="/registro_interacciones">Registrar interaccion</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/soporte">Panel Soporte</a>
         
-    </nav>
-<h2>📂 Lista de Tickets</h2>
+    {% endif %}
+    <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+</nav>
+
+
+
+<div class="contenedor">
+
+<h2>Lista de Tickets</h2>
+
+
+<div class="tabla-contenedor">
+
+
+<div class="buscador">
+
+<form method="GET" action="/tickets">
+
+<input 
+type="text" 
+name="buscar" 
+placeholder="Buscar ticket, cliente, correo o DN..." 
+value="{{ buscar }}"
+>
+
+<!-- FILTRO MOTIVO -->
+<select name="categoria">
+<option value="">Motivo</option>
+<option value="llamadas" {% if categoria=="Error" %}selected{% endif %}>Llamadas</option>
+<option value="datos" {% if categoria=="Error" %}selected{% endif %}>Datos</option>
+<option value="sms" {% if categoria=="Error" %}selected{% endif %}>SMS</option>
+<option value="falla_total" {% if categoria=="Solicitud" %}selected{% endif %}>Falla total</option>
+<option value="otros" {% if categoria=="Error" %}selected{% endif %}>Otros</option>
+<option value="interaccion" {% if categoria=="Error" %}selected{% endif %}>interacciones</option>
+<option value="bono" {% if categoria=="Interaccion" %}selected{% endif %}>Bono de GB</option>
+</select>
+
+<!-- FILTRO ESTATUS -->
+<select name="estatus">
+<option value="">Estatus</option>
+<option value="Abierto" {% if estatus=="Abierto" %}selected{% endif %}>Abierto</option>
+<option value="En proceso" {% if estatus=="En proceso" %}selected{% endif %}>En proceso</option>
+<option value="Cerrado" {% if estatus=="Cerrado" %}selected{% endif %}>Cerrado</option>
+<option value="Pendiente" {% if estatus=="Pendiente" %}selected{% endif %}>Pendiente</option>
+</select>
+
+<select name="ejecutivo_nombre">
+
+
+
+
+
+<option value="">Ejecutivo</option>
+
+<option value="DAVID MORA" {% if ejecutivo_nombre=="DAVID MORA" %}selected{% endif %}>
+DAVID MORA
+</option>
+
+<option value="CESAR OCTAVIO SANTOS PERES" {% if ejecutivo_nombre=="CESAR OCTAVIO SANTOS PERES" %}selected{% endif %}>
+CESAR OCTAVIO SANTOS
+</option>
+
+<option value="FATIMA GUADALUPE MENDOZA SILIAS" {% if ejecutivo_nombre=="FATIMA GUADALUPE MENDOZA SILIAS" %}selected{% endif %}>
+FATIMA GUADALUPE MENDOZA SILIAS
+</option>
+
+<option value="VICTOR DE JESUS GOMEZ ZEA" {% if ejecutivo_nombre=="VICTOR DE JESUS GOMEZ ZEA" %}selected{% endif %}>
+VICTOR DE JESUS GOMEZ ZEA
+</option>
+
+<option value="MANUEL ALEJANDRO GONZALEZ RIOS" {% if ejecutivo_nombre=="MANUEL ALEJANDRO GONZALEZ RIOS" %}selected{% endif %}>
+MANUEL ALEJANDRO GONZALEZ RIOS
+</option>
+
+</select>
+
+
+
+
+
+<button type="submit">🔎 Buscar</button>
+
+<a class="btn-limpiar" href="/tickets">
+Limpiar
+</a>
+
+</form>
+
+</div>
+
+
+    
+
+<br>
+<table class="tabla-tickets">
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Motivo</th>
+<th>Cliente</th>
+<th>Correo</th>
+<th>Dn afectado</th>
+<th>Fecha de creacion</th>
+<th>Estatus</th>
+<th>Acción</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% if tickets %}
 
 {% for t in tickets %}
-<p>
-    🎫 <a href="{{ url_for('detalle_ticket', id=t.id) }}">TT-{{ t.id }}</a>
-|
-    {{ t.categoria }} |
-    {{ t.estatus }}
-</p>
+
+<tr>
+
+<td>TT-{{ t.id }}</td>
+
+<td>{{ t.categoria }}</td>
+
+<td>
+{{ t.cliente_nombre }}
+</td>
+
+<td>
+{{ t.cliente_correo }}
+</td>
+
+<td>
+{{ t.dn_afectado }}
+</td>
+
+
+<td>
+{{ t.fecha_creacion }}
+</td>
+
+
+<td class="estado {{ t.estatus|lower }}">
+{{ t.estatus }}
+</td>
+
+<td>
+<a class="boton-ver" href="{{ url_for('detalle_ticket', id=t.id) }}">
+Ver
+</a>
+</td>
+
+</tr>
+
 {% endfor %}
+
+{% else %}
+
+<tr>
+<td colspan="4" style="text-align:center;">
+No se encontraron tickets
+</td>
+</tr>
+
+{% endif %}
+
+</tbody>
+
+</table>
+
+</div>
+
 
 <br>
 
+
+<!-- PAGINACIÓN -->
+<div class="paginacion">
+
+{% if page > 1 %}
+<a class="pagina-btn" href="{{ url_for('ver_tickets', page=page-1, buscar=buscar) }}">
+⬅ Anterior
+</a>
+{% endif %}
+
+<span class="pagina-actual">
+Página {{ page }} de {{ total_paginas }}
+</span>
+
+{% if page < total_paginas %}
+<a class="pagina-btn" href="{{ url_for('ver_tickets', page=page+1, buscar=buscar) }}">
+Siguiente ➡
+</a>
+{% endif %}
+
+</div>
+<div>
+ <a href="{{ url_for('descargar_excel') }}" class="btn-descargar">💾 Descargar Excel</a>
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/notificaciones.js') }}"></script>
 
 </body>
 </html>

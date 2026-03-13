@@ -1,0 +1,176 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Segoe UI",Arial,sans-serif;
+}
+
+/* fondo */
+
+body{
+
+height:100vh;
+
+background-image:url("../img/fondos/fondo1.png");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+}
+
+/* capa para mejorar legibilidad */
+
+.overlay{
+
+width:100%;
+height:100%;
+
+background:rgba(255,255,255,0.50);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+}
+
+/* tarjeta login */
+
+.login-box{
+
+width:360px;
+
+background:white;
+
+padding:40px;
+
+border-radius:10px;
+
+box-shadow:0 15px 40px rgba(0,0,0,0.15);
+
+}
+
+/* encabezado */
+
+.header{
+text-align:center;
+margin-bottom:30px;
+}
+
+.header h1{
+font-size:28px;
+color:#1f2937;
+}
+
+.header p{
+color:#6b7280;
+font-size:14px;
+}
+
+/* inputs */
+
+.input-group{
+margin-bottom:20px;
+}
+
+.input-group label{
+font-size:13px;
+color:#374151;
+margin-bottom:6px;
+display:block;
+}
+
+.input-field{
+
+display:flex;
+align-items:center;
+
+border:1px solid #d1d5db;
+
+border-radius:6px;
+
+padding:10px;
+
+}
+
+.input-field i{
+color:#9ca3af;
+margin-right:8px;
+}
+
+.input-field input{
+
+border:none;
+outline:none;
+width:100%;
+
+font-size:14px;
+
+}
+
+/* boton */
+
+.btn-login{
+
+width:100%;
+
+background:#28c7ac;
+
+border:none;
+
+padding:12px;
+
+border-radius:6px;
+
+color:white;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.btn-login:hover{
+background:#1d4ed8;
+}
+
+/* error */
+
+.error{
+
+background:#fee2e2;
+
+color:#b91c1c;
+
+padding:10px;
+
+border-radius:6px;
+
+font-size:13px;
+
+margin-bottom:15px;
+
+display:flex;
+gap:6px;
+align-items:center;
+
+}
+
+/* footer */
+
+.footer{
+
+margin-top:25px;
+
+text-align:center;
+
+font-size:12px;
+
+color:#9ca3af;
+
+}

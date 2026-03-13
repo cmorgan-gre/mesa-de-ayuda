@@ -1,0 +1,142 @@
+/* ================== PALETA DE COLORES ================== */
+:root {
+    --blanco: #FFFFFF;
+    --negro: #000000;
+    --verde: #27E1C1;
+    --azul: #6271F9;
+    --verde-oscuro: #28C7AC;
+    --azul-oscuro: #4454E2;
+    --amarillo: #FDB827;
+    --gris-claro: #F2F5F6;
+    --lila: #E8DAF8;
+    --azul-claro: #D4F1FF;
+}
+
+/* ================== GENERAL ================== */
+/* ================== HEADER ================== */
+header {
+    background-color: var(--negro);
+    color: var(--blanco);
+    text-align: center;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3.5rem;
+}
+
+/* ================== NAV ================== */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    background-color: var(--verde);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--negro);
+    font-weight: bold;
+    padding: 0.5rem 1.2rem;
+    transition: .3s;
+}
+
+nav a:hover {
+    background-color: var(--verde-oscuro);
+    color: var(--blanco);
+    border-radius: 5px;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--gris-claro);
+    margin:0;
+    padding:0;
+}
+
+
+/* ================== FORMULARIO ================== */
+
+form{
+    background: var(--blanco);
+    width:650px;
+    margin:40px auto;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+/* TITULO */
+
+h2{
+    text-align:center;
+    color: var(--negro);
+    margin-bottom:25px;
+}
+
+h3{
+    color: var(--verde-oscuro);
+    border-bottom:2px solid var(--gris-claro);
+    padding-bottom:5px;
+}
+
+/* ================== INPUTS ================== */
+
+input, select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    margin-bottom:15px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    font-size:14px;
+    box-sizing:border-box;
+}
+
+input:focus,
+select:focus{
+    outline:none;
+    border:1px solid var(--azul);
+    box-shadow:0 0 4px var(--azul-claro);
+}
+
+/* ================== BOTON ================== */
+
+button{
+    background: var(--verde);
+    color: var(--negro);
+    border:none;
+    padding:12px 25px;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+    display:block;
+    margin:20px auto;
+}
+
+button:hover{
+    background: var(--verde-oscuro);
+    transform:scale(1.05);
+}
+
+/* ================== RESPONSIVE ================== */
+
+@media (max-width:700px){
+
+form{
+    width:90%;
+}
+
+nav{
+    flex-direction:column;
+    align-items:center;
+}
+
+}

@@ -1,139 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/styles.css') }}">
-<link rel="icon" type="image/svg+xml" href="/favicon.png">
-
-    <title>Detalle Ticket Soporte</title>
+    <meta charset="UTF-8">
+    
+    <link rel="preload" href="{{ url_for('static', filename='estilos/detalle_soporte.css') }}" as="style">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/detalle_soporte.css') }}">
+    <link rel="icon" type="image/svg+xml" href="/favicon.png">
+    <title>Detalle Ticket TT-{{ ticket.id }}</title>
 </head>
 <body>
-  <header>
- <h1>inphonity </h1>
+    <header>
+        <h1>inphonity</h1>
     </header>
-    <nav>
-       <a href="/inicio_cc">Inicio</a>
 
+<nav>
+    {% if rol == "ejecutivo" %}
+        <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Historial</a>
         <a href="/">Crear ticket</a>
         <a href="/registro_interacciones">Registrar interaccion</a>
-        
-    </nav>
-<h2>🎫 Ticket TT-{{ ticket.id }}</h2>
-<hr>
+    {% elif rol == "soporte" %}
+            <a href="/inicio_cc">Inicio</a>
+        <a href="/tickets">Historial</a>
+        <a href="/">Crear ticket</a>
+        <a href="/registro_interacciones">Registrar interaccion</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/soporte">Panel Soporte</a>
+       
+    {% endif %}
+    <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+</nav>
 
-<!-- ================= EJECUTIVO ================= -->
-{% if ticket.ejecutivo_nombre or ticket.ejecutivo_email %}
-<h3>👤 Ejecutivo</h3>
-    {% if ticket.ejecutivo_nombre %}
-        Nombre: {{ ticket.ejecutivo_nombre }} <br>
-    {% endif %}
-    {% if ticket.ejecutivo_email %}
-        Email: {{ ticket.ejecutivo_email }} <br>
-    {% endif %}
-{% endif %}
+    <div class="contenedor-ticket">
+        <h2> TT-{{ ticket.id }}</h2>
+        <hr>
 
-<!-- ================= CLIENTE ================= -->
-{% if ticket.cliente_nombre or ticket.cliente_correo or ticket.dn_afectado or ticket.dn_contacto or ticket.rol or ticket.canal %}
-<h3>👥 Cliente</h3>
-    {% if ticket.cliente_nombre %}
-        Nombre: {{ ticket.cliente_nombre }} <br>
-    {% endif %}
-    {% if ticket.cliente_correo %}
-        Correo: {{ ticket.cliente_correo }} <br>
-    {% endif %}
-    {% if ticket.dn_afectado %}
-        DN Afectado: {{ ticket.dn_afectado }} <br>
-    {% endif %}
-    {% if ticket.dn_contacto %}
-        DN Contacto: {{ ticket.dn_contacto }} <br>
-    {% endif %}
-    {% if ticket.rol %}
-        Rol: {{ ticket.rol }} <br>
-    {% endif %}
-    {% if ticket.canal %}
-        Canal: {{ ticket.canal }} <br>
-    {% endif %}
-    {% if ticket.link_genesys %}
-        Link Genesys: 
-        <a href="{{ ticket.link_genesys }}" target="_blank">Abrir grabación</a><br>
-    {% endif %}
-{% endif %}
+        <!-- EJECUTIVO -->
+        {% if ticket.ejecutivo_nombre or ticket.ejecutivo_email %}
+        <div class="seccion-ticket">
+            <h3>👤 Ejecutivo</h3>
+            {% if ticket.ejecutivo_nombre %}<p><strong>Nombre:</strong> {{ ticket.ejecutivo_nombre }}</p>{% endif %}
+            
+        </div>
+        {% endif %}
 
-<!-- ================= DETALLES DEL PROBLEMA ================= -->
-{% if ticket.categoria or ticket.descripcion_error or ticket.ubicacion or ticket.validaciones or ticket.tipo_afectacion or ticket.pagina_app %}
-<h3>📂 Detalles del problema</h3>
-    {% if ticket.categoria %}
-        Categoría: {{ ticket.categoria }} <br>
-    {% endif %}
-    {% if ticket.descripcion_error %}
-        Descripción: {{ ticket.descripcion_error }} <br>
-    {% endif %}
-    {% if ticket.ubicacion %}
-        Ubicación: {{ ticket.ubicacion }} <br>
-    {% endif %}
-    {% if ticket.validaciones %}
-        Validaciones: {{ ticket.validaciones }} <br>
-    {% endif %}
-    {% if ticket.tipo_afectacion %}
-        Tipo afectación: {{ ticket.tipo_afectacion }} <br>
-    {% endif %}
-    {% if ticket.pagina_app %}
-        Página/App: {{ ticket.pagina_app }} <br>
-    {% endif %}
-    
-{% endif %}
-{% if adjuntos %}
-<h3>📎 Evidencias</h3>
-<ul>
-{% for a in adjuntos %}
+        <!-- CLIENTE -->
+        {% if ticket.cliente_nombre or ticket.cliente_correo or ticket.dn_afectado or ticket.dn_contacto or ticket.rol or ticket.canal %}
+        <div class="seccion-ticket">
+            <h3>👥 Cliente</h3>
+            {% if ticket.cliente_nombre %}<p><strong>Nombre:</strong> {{ ticket.cliente_nombre }}</p>{% endif %}
+            {% if ticket.cliente_correo %}<p><strong>Correo:</strong> {{ ticket.cliente_correo }}</p>{% endif %}
+            {% if ticket.dn_afectado %}<p><strong>DN Afectado:</strong> {{ ticket.dn_afectado }}</p>{% endif %}
+            {% if ticket.dn_contacto %}<p><strong>DN Contacto:</strong> {{ ticket.dn_contacto }}</p>{% endif %}
+            {% if ticket.rol %}<p><strong>Rol:</strong> {{ ticket.rol }}</p>{% endif %}
+            {% if ticket.canal %}<p><strong>Canal:</strong> {{ ticket.canal }}</p>{% endif %}
+            {% if ticket.link_genesys %}
+                <p><strong>Link Genesys:</strong> 
+                    <a href="{{ ticket.link_genesys }}" target="_blank">Abrir grabación</a>
+                </p>
+            {% endif %}
+        </div>
+        {% endif %}
 
-<li><a href="{{ url_for('uploaded_file', filename=a.ruta_archivo) }}" target="_blank">
-{{ a.nombre_archivo }}</a></li>
+        <!-- DETALLES DEL PROBLEMA -->
+        {% if ticket.categoria or ticket.descripcion_error or ticket.ubicacion or ticket.validaciones or ticket.tipo_afectacion or ticket.pagina_app %}
+        <div class="seccion-ticket">
+            <h3>📂 Detalles del problema</h3>
+            {% if ticket.categoria %}<p><strong>Categoría:</strong> {{ ticket.categoria }}</p>{% endif %}
+            {% if ticket.descripcion_error %}<p><strong>Descripción:</strong> {{ ticket.descripcion_error }}</p>{% endif %}
+            {% if ticket.ubicacion %}<p><strong>Ubicación:</strong> {{ ticket.ubicacion }}</p>{% endif %}
+            {% if ticket.validaciones %}<p><strong>Validaciones:</strong> {{ ticket.validaciones }}</p>{% endif %}
+            {% if ticket.tipo_afectacion %}<p><strong>Tipo afectación:</strong> {{ ticket.tipo_afectacion }}</p>{% endif %}
+            {% if ticket.pagina_app %}<p><strong>Página/App:</strong> {{ ticket.pagina_app }}</p>{% endif %}
+        </div>
+        {% endif %}
 
-{% endfor %}
-</ul>
-{% endif %}
+        <!-- EVIDENCIAS -->
+        {% if adjuntos %}
+        <div class="seccion-ticket">
+            <h3>📎 Evidencias</h3>
+            <ul class="lista-adjuntos">
+                {% for a in adjuntos %}
+                    <li><a href="{{ url_for('uploaded_file', filename=a.ruta_archivo) }}" target="_blank">{{ a.nombre_archivo }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
 
-<!-- ================= ESTATUS ================= -->
-{% if ticket.estatus %}
-<h3>📌 Estatus actual: {{ ticket.estatus }}</h3>
-{% endif %}
+        <!-- ESTATUS -->
+        {% if ticket.estatus %}
+        <div class="seccion-ticket">
+            <h3>📌 Estatus actual: <span class="estatus">{{ ticket.estatus }}</span></h3>
+        </div>
+        {% endif %}
 
-<hr>
+        <hr>
 
-<!-- ================= HISTORIAL DE COMENTARIOS ================= -->
-<h3>💬 Historial de comentarios</h3>
-{% if comentarios %}
-    {% for c in comentarios %}
-    <div style="border:1px solid #ccc; padding:5px; margin-bottom:5px;">
-        <strong>{{ c.remitente }}:</strong> {{ c.comentario }}
+        <!-- COMENTARIOS -->
+        <div class="seccion-ticket">
+            <h3>💬 Historial de comentarios</h3>
+            {% if comentarios %}
+                <div class="comentarios">
+                    {% for c in comentarios %}
+                        <div class="comentario">
+                            <span class="remitente">{{ c.remitente }}:</span>
+                            <span class="mensaje">{{ c.comentario }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No hay comentarios aún</p>
+            {% endif %}
+        </div>
+
+        <!-- FORMULARIO ACTUALIZAR -->
+        <div class="seccion-ticket">
+            <h3>✏️ Actualizar Ticket</h3>
+            <form method="POST" class="form-actualizar">
+                {% if ticket.estatus %}
+                <label>Cambiar estatus:</label>
+                <select name="estatus">
+                    <option value="Abierto" {% if ticket.estatus=='Abierto' %}selected{% endif %}>Abierto</option>
+                    <option value="En proceso" {% if ticket.estatus=='En proceso' %}selected{% endif %}>En proceso</option>
+                    <option value="Cerrado" {% if ticket.estatus=='Cerrado' %}selected{% endif %}>Cerrado</option>
+                </select>
+                <br><br>
+                {% endif %}
+                
+                <label>Agregar comentario:</label><br>
+                <textarea name="comentario" rows="4" placeholder="Escribe tu comentario aquí..."></textarea><br><br>
+                <button type="submit">Guardar cambios</button>
+            </form>
+        </div>
+
+        <br>
+        <a href="/soporte" class="btn-volver">⬅ Volver al panel</a>
     </div>
-    {% endfor %}
-{% else %}
-    <p>No hay comentarios aún</p>
-{% endif %}
 
 
-<!-- ================= FORMULARIO PARA ACTUALIZAR ================= -->
-<h3>Actualizar Ticket</h3>
-<form method="POST">
-    {% if ticket.estatus %}
-    Cambiar estatus:
-    <select name="estatus">
-        <option value="Abierto" {% if ticket.estatus=='Abierto' %}selected{% endif %}>Abierto</option>
-        <option value="En proceso" {% if ticket.estatus=='En proceso' %}selected{% endif %}>En proceso</option>
-        <option value="Cerrado" {% if ticket.estatus=='Cerrado' %}selected{% endif %}>Cerrado</option>
-    </select>
-    <br><br>
-    {% endif %}
 
-    Agregar comentario:<br>
-    <textarea name="comentario" rows="4" cols="50" placeholder="Escribe tu comentario aquí..."></textarea><br><br>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/notificaciones.js') }}"></script>
 
-    <button type="submit">Guardar cambios</button>
-</form>
-
-<br>
-<a href="/soporte">⬅ Volver al panel</a>
 
 </body>
 </html>

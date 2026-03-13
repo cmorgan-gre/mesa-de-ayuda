@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Campañas</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='estilos/inicio.css') }}">
+
+<meta http-equiv="refresh" content="30">
+
+<style>
+
+.tabla{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+.tabla th{
+background:#111;
+color:white;
+padding:10px;
+}
+
+.tabla td{
+padding:8px;
+border-bottom:1px solid #ddd;
+}
+
+.selector{
+margin-top:20px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<header>
+<h1>inphonity</h1>
+</header>
+
+
+<nav>
+
+<a href="/inicio_cc">Inicio</a>
+<a href="/tickets">Historial</a>
+<a href="/campanas">Campañas</a>
+
+<a href="{{ url_for('logout') }}">Cerrar sesión</a>
+
+</nav>
+
+
+<div class="contenedor">
+
+<h2>Base de Campañas</h2>
+
+<div class="selector">
+
+<form method="get">
+
+<select name="campana" onchange="this.form.submit()">
+
+<option value="">Seleccionar campaña</option>
+
+{% for nombre in hojas %}
+
+<option value="{{ nombre }}" {% if campana==nombre %}selected{% endif %}>
+{{ nombre }}
+</option>
+
+{% endfor %}
+
+</select>
+
+</form>
+
+</div>
+
+
+{% if datos %}
+
+<table class="tabla">
+
+<tr>
+
+{% for columna in datos[0].keys() %}
+<th>{{ columna }}</th>
+{% endfor %}
+
+</tr>
+
+{% for fila in datos %}
+
+<tr>
+
+{% for valor in fila.values() %}
+<td>{{ valor }}</td>
+{% endfor %}
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
