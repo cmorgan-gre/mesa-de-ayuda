@@ -5,8 +5,11 @@ console.log("🔌 iniciando manager.js...");
    CONEXION SOCKET
 ========================= */
 
-const socket = io(window.location.origin);
-
+const socket = io("https://tickets-inphonity.cloud", {
+    path: "/socket.io",
+    transports: ["websocket", "polling"], // polling como fallback
+    secure: true
+});
 socket.on("connect", function(){
     console.log("✅ Socket conectado:", socket.id);
 });
