@@ -10,8 +10,16 @@ import os
 from werkzeug.utils import secure_filename  # type: ignore
 
 app = Flask(__name__)
-socketio = SocketIO(app, async_mode="threading")
+# ⚡ Eventlet necesario para producción
+socketio = SocketIO(
+    app,
+    async_mode="eventlet",
+    cors_allowed_origins="https://tickets-inphonity.cloud"  # solo tu dominio
+)
+
+
 DB = "tickets.db"
+
 
 usuarios_conectados = {}
 EJECUTIVO_ROOMS = {
